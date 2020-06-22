@@ -1,7 +1,7 @@
 # Личный проект «YetiCave»
 
 * Студент: [Илья Передерин](https://up.htmlacademy.ru/php/12/user/1525665).
-* Наставник: [Никита Колосов] (https://htmlacademy.ru/profile/id1186205).
+* Наставник: [Никита Колосов](https://htmlacademy.ru/profile/id1186205).
 
 ---
 
