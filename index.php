@@ -103,11 +103,6 @@ $user_name = 'Илья'; // укажите здесь ваше имя
         <h2 class="promo__title">Нужен стафф для катки?</h2>
         <p class="promo__text">На нашем интернет-аукционе ты найдёшь самое эксклюзивное сноубордическое и горнолыжное снаряжение.</p>
         <ul class="promo__list">
-          <?php
-                $category = [
-                  "Доски и лыжи", "Крепления", "Ботинки", "Одежда", "Инструменты", "Разное"
-                ];
-          ?>
             <!--заполните этот список из массива категорий-->
             <?php
                 foreach($categories as $category):
@@ -116,7 +111,6 @@ $user_name = 'Илья'; // укажите здесь ваше имя
                     <a class="promo__link" href="pages/all-lots.html"><?=$category; ?></a>
               </li>
               <?php endforeach; ?>
-
         </ul>
     </section>
     <section class="lots">
@@ -124,51 +118,6 @@ $user_name = 'Илья'; // укажите здесь ваше имя
             <h2>Открытые лоты</h2>
         </div>
         <ul class="lots__list">
-          <?php
-            $products = [
-              [
-                'name' => '2014 Rossignol District Snowboard',
-                'categories' => 'Доски и лыжи',
-                'price' => '10999',
-                'url_pict' => 'img/lot-1.jpg',
-              ],
-
-              [
-                'name' => 'DC Ply Mens 2016/2017 Snowboard',
-                'categories' => 'Доски и лыжи',
-                'price' => '159999',
-                'url_pict' => 'img/lot-2.jpg',
-              ],
-
-              [
-                'name' => 'Крепления Union Contact Pro 2015 года размер L/XL',
-                'categories' => 'Крепления',
-                'price' => '8000',
-                'url_pict' => 'img/lot-3.jpg',
-              ],
-
-              [
-                'name' => 'Ботинки для сноуборда DC Mutiny Charocal',
-                'categories' => 'Ботинки',
-                'price' => '10999',
-                'url_pict' => 'img/lot-4.jpg',
-              ],
-              [
-                'name' => 'Куртка для сноуборда DC Mutiny Charocal',
-                'categories' => 'Одежда',
-                'price' => '7500',
-                'url_pict' => 'img/lot-5.jpg',
-              ],
-
-              [
-                'name' => 'Маска Oakley Canopy',
-                'categories' => 'Разное',
-                'price' => '5400',
-                'url_pict' => 'img/lot-6.jpg',
-              ]
-
-            ];
-           ?>
             <!--заполните этот список из массива с товарами-->
             <?php foreach ($products as $product): ?>
             <li class="lots__item lot">
@@ -200,6 +149,7 @@ $user_name = 'Илья'; // укажите здесь ваше имя
     <nav class="nav">
         <ul class="nav__list container">
             <!--заполните этот список из массива категорий-->
+            <li class="nav__item">
                 <a href="pages/all-lots.html">Название категории</a>
             </li>
         </ul>
