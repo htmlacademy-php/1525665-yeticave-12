@@ -1,4 +1,5 @@
 <?php
+      require_once("function.php");
       $categories = [
         "Доски и лыжи", "Крепления", "Ботинки", "Одежда", "Инструменты", "Разное"
       ];
@@ -130,8 +131,7 @@ $user_name = 'Илья'; // укажите здесь ваше имя
                   <div class="lot__state">
                       <div class="lot__rate">
                           <span class="lot__amount">Стартовая цена</span>
-                          <?php require_once("function.php"); ?>
-                         <span class="lot__cost"> <?= format_sum($product['cost']); echo " ", "₽"; ?></span>
+                         <span class="lot__cost"> <?= format_sum($product['cost']); ?></span>
                       </div>
 
                       <div class="lot__timer timer">
