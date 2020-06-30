@@ -130,19 +130,8 @@ $user_name = 'Илья'; // укажите здесь ваше имя
                   <div class="lot__state">
                       <div class="lot__rate">
                           <span class="lot__amount">Стартовая цена</span>
-                          <?php function format_sum ($product){
-                            $ok_sum = ceil($product);
-                            if ($ok_sum < 1000){
-                              echo "$ok_sum", " ", "₽";
-                            }
-                            elseif ($ok_sum > 1000){
-                              $ok_sum = number_format($ok_sum, 0, ' ', ' ');
-                              echo "$ok_sum", " ", "₽";
-                            }
-                            return ;
-                          }
-                          ?>
-                         <span class="lot__cost"> <?= format_sum($product['cost']); ?></span>
+                          <?php require_once("function.php"); ?>
+                         <span class="lot__cost"> <?= format_sum($product['cost']); echo " ", "₽"; ?></span>
                       </div>
 
                       <div class="lot__timer timer">
