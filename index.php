@@ -1,16 +1,13 @@
 <?php
       require_once("function.php");
+      require_once("helpers.php");
       $categories = [
         "Доски и лыжи", "Крепления", "Ботинки", "Одежда", "Инструменты", "Разное"
       ];
-?>
-<?php
 $is_auth = rand(0, 1);
 
-$user_name = 'Илья'; // укажите здесь ваше имя
-?>
-<?php
-require_once("helpers.php");
+$user_name = 'Илья';
+
 $products = [
   [
     'title' => '2014 Rossignol District Snowboard',
@@ -54,7 +51,7 @@ $products = [
   ]
 
 ];
-$content = include_template('main.php', ['categories' => $categories, 'products' => $products], ['products' => $products]);
+$content = include_template('main.php', ['categories' => $categories, 'products' => $products]);
 
 $layout_content = include_template('layout.php', ['content' => $content, 'title' => 'Главная']);
 
