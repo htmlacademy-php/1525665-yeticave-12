@@ -2,13 +2,15 @@
 <?php
 $is_auth = rand(0, 1);
 
-$user_name = 'Илья'; // укажите здесь ваше имя
+$user_name = 'Илья';
+$categories = [
+  "Доски и лыжи", "Крепления", "Ботинки", "Одежда", "Инструменты", "Разное"
+];
 ?>
 <!DOCTYPE html>
 <html lang="ru">
 <head>
     <meta charset="UTF-8">
-    <?php $title = "Главная"; ?>
     <title><?= $title; ?></title>
     <link href="../css/normalize.min.css" rel="stylesheet">
     <link href="../css/style.css" rel="stylesheet">
@@ -44,7 +46,6 @@ $user_name = 'Илья'; // укажите здесь ваше имя
       </li>
   </ul>
 <?php endif; ?>
-        <!-- здесь должен быть PHP код для показа меню и данных пользователя -->
 
         </nav>
     </div>
@@ -58,10 +59,13 @@ $user_name = 'Илья'; // укажите здесь ваше имя
 <footer class="main-footer">
     <nav class="nav">
         <ul class="nav__list container">
-            <!--заполните этот список из массива категорий-->
+                <?php
+                foreach($categories as $category):
+               ?>
             <li class="nav__item">
-                <a href="pages/all-lots.html">Название категории</a>
-            </li>
+                    <a href="pages/all-lots.html"><?=$category; ?></a>
+              </li>
+              <?php endforeach; ?>
         </ul>
     </nav>
     <div class="main-footer__bottom container">
