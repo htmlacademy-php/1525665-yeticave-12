@@ -54,7 +54,7 @@ $products = [
   ]
 
 ];
-$content = include_template('main.php', ['lots' => $products]);
+$content = include_template('main.php', ['categories' => $categories, 'products' => $products], ['products' => $products]);
 
 $layout_content = include_template('layout.php', ['content' => $content, 'title' => 'Главная']);
 

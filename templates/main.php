@@ -32,7 +32,7 @@
                           <span class="lot__amount">Стартовая цена</span>
                          <span class="lot__cost"> <?= htmlspecialchars(format_sum($product['cost'])); ?></span>
                       </div>
-                       <?= renderTemplate('templates', ['lots' => $products]); ?>
+                      
                       <div class="lot__timer timer">
                           12:23
                       </div>
