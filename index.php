@@ -53,7 +53,7 @@ $products = [
 ];
 $content = include_template('main.php', ['categories' => $categories, 'products' => $products]);
 
-$layout_content = include_template('layout.php', ['content' => $content, 'title' => 'Главная']);
+$layout_content = include_template('layout.php', ['content' => $content, 'title' => 'Главная', 'categories' => $categories, 'is_auth' => $is_auth, 'user_name' => 'Илья']);
 
 print($layout_content);
 ?>

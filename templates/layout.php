@@ -1,12 +1,3 @@
-
-<?php
-$is_auth = rand(0, 1);
-
-$user_name = 'Илья';
-$categories = [
-  "Доски и лыжи", "Крепления", "Ботинки", "Одежда", "Инструменты", "Разное"
-];
-?>
 <!DOCTYPE html>
 <html lang="ru">
 <head>
