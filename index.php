@@ -14,6 +14,7 @@ $products = [
     'category' => 'Доски и лыжи',
     'cost' => 10999,
     'image' => 'img/lot-1.jpg',
+    'date' => '2020-07-07',
   ],
 
   [
@@ -21,6 +22,7 @@ $products = [
     'category' => 'Доски и лыжи',
     'cost' => 159999,
     'image' => 'img/lot-2.jpg',
+    'date' => '2020-07-14',
   ],
 
   [
@@ -28,6 +30,7 @@ $products = [
     'category' => 'Крепления',
     'cost' => 8000,
     'image' => 'img/lot-3.jpg',
+    'date' => '2020-07-14',
   ],
 
   [
@@ -35,12 +38,14 @@ $products = [
     'category' => 'Ботинки',
     'cost' => 10999,
     'image' => 'img/lot-4.jpg',
+    'date' => '2020-07-14',
   ],
   [
     'title' => 'Куртка для сноуборда DC Mutiny Charocal',
     'category' => 'Одежда',
     'cost' => 7500,
     'image' => 'img/lot-5.jpg',
+    'date' => '2020-07-17',
   ],
 
   [
@@ -48,6 +53,7 @@ $products = [
     'category' => 'Разное',
     'cost' => 5400,
     'image' => 'img/lot-6.jpg',
+    'date' => '2020-07-19',
   ]
 
 ];
