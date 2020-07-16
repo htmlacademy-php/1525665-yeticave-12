@@ -31,10 +31,8 @@
                          <span class="lot__cost"> <?= htmlspecialchars(format_sum($product['cost'])); ?></span>
                       </div>
 
-                      <div class="lot__timer timer" <?php if($add_class === 1){
-                        echo 'class="timer--finishing" ';
-                      } ?>>
-                          <?= timer_2($product['date']); ?>
+                      <div class="lot__timer timer <?php if ($hours_count < 1){ echo ' timer--finishing'; }; ?>" >
+                          <?=  timer_2($product['date']); ?>
                       </div>
                     </div>
                 </div>
