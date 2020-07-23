@@ -30,9 +30,15 @@
                           <span class="lot__amount">Стартовая цена</span>
                          <span class="lot__cost"> <?= htmlspecialchars(format_sum($product['cost'])); ?></span>
                       </div>
-
-                      <div class="lot__timer timer <?php if ($hours_count < 1){ echo ' timer--finishing'; }; ?>" >
-                          <?=  timer_2($product['date']); ?>
+                      <div class="lot__timer timer <?php
+                      $result = timer_2($product['date']);
+                      if ($result < 1){
+                     echo ' timer--finishing';
+                   };
+                       ?>" 
+                       >
+                          <?=  $rest_time = implode(":", timer_2($product['date']));
+                          ?>
                       </div>
                     </div>
                 </div>
