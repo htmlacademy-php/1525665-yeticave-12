@@ -17,7 +17,7 @@
             <h2>Открытые лоты</h2>
         </div>
         <ul class="lots__list">
-            <?php foreach ($products as $product): ?>
+            <?php foreach ($products as $product): $result = deletion_of_lot($product['date']); ?>
             <li class="lots__item lot">
               <div class="image">
                     <img src="<?=$product['image']; ?>" width="350" height="260" alt="">
@@ -31,13 +31,12 @@
                          <span class="lot__cost"> <?= htmlspecialchars(format_sum($product['cost'])); ?></span>
                       </div>
                       <div class="lot__timer timer <?php
-                      $result = timer_2($product['date']);
-                      if ($result < 1){
+                      if ($result['hours'] < 1){
                      echo ' timer--finishing';
                    };
-                       ?>" 
+                       ?>"
                        >
-                          <?=  $rest_time = implode(":", timer_2($product['date']));
+                          <?=  $rest_time = implode(":", $result);
                           ?>
                       </div>
                     </div>
