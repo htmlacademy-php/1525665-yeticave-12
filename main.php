@@ -31,7 +31,7 @@
                          <span class="lot__cost"> <?= htmlspecialchars(format_sum($product['cost'])); ?></span>
                       </div>
                       <div class="lot__timer timer <?php
-                      if ($result['hours'] < 1){
+                      if ($result[0] < 1){
                      echo ' timer--finishing';
                    };
                        ?>"

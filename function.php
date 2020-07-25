@@ -19,7 +19,7 @@
       $hours_count = $hours_count + (24 * $days_count);
     }
     $minutes_count = date_interval_format($diff, '%i');
-    $rest_time = ["hours" => $hours_count, $minutes_count];
+    $rest_time = [$hours_count, $minutes_count];
     return $rest_time;
   }
 ?>
