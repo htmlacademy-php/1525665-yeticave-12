@@ -1,14 +1,14 @@
-CREATE DATABASE yeticave
+CREATE DATABASE YetiCave
 DEFAULT CHARACTER SET utf8
 DEFAULT COLLATE utf8_general_ci;
 USE YetiCave;
 CREATE TABLE users (
   id INT AUTO_INCREMENT PRIMARY KEY,
   register_date DATETIME not null;
-  name CHAR(64),
-  email VARCHAR(128),
-  contacts CHAR(64),
-  password CHAR(64)
+  name CHAR(64) not null,
+  email VARCHAR not null UNIQUE,
+  contacts TEXT not null,
+  password CHAR(64) not null
 );
 
 CREATE UNIQUE INDEX user_email on users(email);
@@ -22,11 +22,22 @@ CREATE TABLE lots (
   first_price INT not null,
   date_delection DATETIME not null,
   bet_step INT not null,
-  author CHAR(64) not null,
-  winner CHAR(64) null,
+  author not null,
+  winner null,
   category_id INT not null
 );
 
+ALTER TABLE users ADD
+FOREIGN KEY (id)
+REFERENCES lots
+(author);
+
+ALTER TABLE users ADD
+FOREIGN KEY (id)
+REFERENCES lots
+(winner);
+
+CREATE FULLTEXT INDEX lot_text on lots(description);
 CREATE INDEX lots_name on lots(name);
 CREATE INDEX lots_desc on lots(description);
 
