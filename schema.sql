@@ -4,9 +4,9 @@ DEFAULT COLLATE utf8_general_ci;
 USE YetiCave;
 CREATE TABLE users (
   id INT AUTO_INCREMENT PRIMARY KEY,
-  register_date DATETIME not null;
+  register_date DATETIME not null,
   name CHAR(64) not null,
-  email VARCHAR not null UNIQUE,
+  email VARCHAR(320) not null UNIQUE,
   contacts TEXT not null,
   password CHAR(64) not null
 );
@@ -18,24 +18,24 @@ CREATE TABLE lots (
   date_creation DATETIME not null,
   name CHAR(64) not null,
   description TEXT not null,
-  image URL CHAR(100),
+  url CHAR(100),
   first_price INT not null,
   date_delection DATETIME not null,
   bet_step INT not null,
-  author not null,
-  winner null,
+  author INT not null,
+  winner INT null,
   category_id INT not null
 );
 
-ALTER TABLE users ADD
-FOREIGN KEY (id)
-REFERENCES lots
-(author);
+ALTER TABLE lots ADD
+FOREIGN KEY (author)
+REFERENCES users
+(id);
 
-ALTER TABLE users ADD
-FOREIGN KEY (id)
-REFERENCES lots
-(winner);
+ALTER TABLE lots ADD
+FOREIGN KEY (winner)
+REFERENCES users
+(id);
 
 CREATE FULLTEXT INDEX lot_text on lots(description);
 CREATE INDEX lots_name on lots(name);
@@ -53,7 +53,18 @@ CREATE TABLE bets (
   id INT AUTO_INCREMENT PRIMARY KEY,
   time_bet DATETIME not null,
   cost INT not null,
-  user_id INT,
-  lot_id INT
+  user_id INT not null,
+  lot_id INT not null
 );
+
+ALTER TABLE bets ADD
+FOREIGN KEY (user_id)
+REFERENCES users
+(id);
+
+ALTER TABLE bets ADD
+FOREIGN KEY (lot_id)
+REFERENCES users
+(id);
+
 CREATE UNIQUE INDEX bets_id on bets(id);
