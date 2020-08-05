@@ -51,7 +51,6 @@ CREATE TABLE categories (
 	img CHAR(30)
 );
 
-CREATE UNIQUE INDEX category_id on categories(id);
 
 CREATE TABLE bets (
   id INT AUTO_INCREMENT PRIMARY KEY,
