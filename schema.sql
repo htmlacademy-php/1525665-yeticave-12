@@ -59,12 +59,10 @@ CREATE TABLE bets (
 
 ALTER TABLE bets ADD
 FOREIGN KEY (user_id)
-REFERENCES users
+REFERENCES lots
 (id);
 
 ALTER TABLE bets ADD
 FOREIGN KEY (lot_id)
-REFERENCES users
+REFERENCES lots
 (id);
-
-CREATE UNIQUE INDEX bets_id on bets(id);
