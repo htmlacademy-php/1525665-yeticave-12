@@ -21,7 +21,7 @@ INSERT INTO bets (time_bet, cost, user_id, lot_id) VALUES(
 );
 
 SELECT name FROM categories; -- Получил все категории
-SELECT name, first_price, url, first_price + bet_step, name FROM lots JOIN categories --
-SELECT
-UPDATE lots SET name = <?php $new_name ?> WHERE  id = ?--
-SELECT cost FROM bets ORDER BY time_bet DESC
+SELECT name, first_price, url, first_price + bet_step FROM lots JOIN categories; --
+SELECT lot_id, name FROM lots JOIN categories;
+UPDATE lots SET name = '2014 Rossignol District Snowboard'  id = '1';--
+SELECT cost FROM bets ORDER BY time_bet DESC;
