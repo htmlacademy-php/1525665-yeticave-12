@@ -90,7 +90,7 @@ INSERT INTO lots (date_creation, name, description, url, first_price, date_delec
        ('2019-01-17', 20000, 3, 2),
        ('2019-01-17', 25000, 2, 3);
 
-SELECT name FROM categories; -- Получил все категории
+SELECT name, img FROM categories; -- Получил все категории
 SELECT categories.name, lots.name, first_price, url, bet_step FROM lots JOIN categories ON categories.id = lots.category_id WHERE date_delection > NOW();
 SELECT lots.name, first_price, url, bet_step, categories.name FROM lots JOIN categories ON categories.id = lots.category_id WHERE lots.id = 5;
 UPDATE lots SET name = '2014 Rossignol District Snowboard' WHERE  id = 1;
