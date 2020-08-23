@@ -91,7 +91,13 @@ INSERT INTO lots (date_creation, name, description, url, first_price, date_delec
        ('2019-01-17', 25000, 2, 3);
 
 SELECT name, img FROM categories; -- Получил все категории
-SELECT categories.name, lots.name, first_price, url, bet_step FROM lots JOIN categories ON categories.id = lots.category_id WHERE date_delection > NOW();
+
+SELECT lots.name, first_price, url, categories.name, date_creation, first_price + MAX(bets.cost)
+FROM lots LEFT JOIN bets ON lots.id = bets.lot_id JOIN categories ON lots.category_id = categories.id
+WHERE date_delection > NOW()
+GROUP BY lots.name, first_price, url, date_creation, categories.name
+ORDER BY date_creation DESC;
+
 SELECT lots.name, first_price, url, bet_step, categories.name FROM lots JOIN categories ON categories.id = lots.category_id WHERE lots.id = 5;
 UPDATE lots SET name = '2014 Rossignol District Snowboard' WHERE  id = 1;
-SELECT cost FROM bets ORDER BY time_bet DESC WHERE id = 3;
+SELECT cost, user_id, lot_id, id, time_bet FROM bets WHERE id = 3 ORDER BY time_bet DESC;
