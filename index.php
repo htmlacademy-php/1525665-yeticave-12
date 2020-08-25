@@ -1,16 +1,14 @@
 <?php
   $con = mysqli_connect("localhost", "root", "", "yeticave");
   if ($con == false) {
-    print("Ошибка подключения: " . mysqli_connect_error());
+    exit;
   }
   else {
-    print("Соединение установлено");
     mysqli_set_charset($con, "utf8");
     $sql_cat = "SELECT name, id, img FROM categories;";
     $result_cat = mysqli_query($con, $sql_cat);
     if (!$result_cat) {
-      $error = mysqli_error($con);
-      print("Ошибка MySQL: " . $error);
+      exit;
     }
     else{
       $categories = mysqli_fetch_all($result_cat, MYSQLI_ASSOC);
