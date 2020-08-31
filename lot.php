@@ -20,16 +20,6 @@
       $lot = $lot_info[0];
 
       // Получаю максимальную ставку для того, чтобы сложить ее с первоначальной ценой
-      $sql_current = "SELECT MAX(cost), lot_id FROM bets JOIN lots ON lots.id = bets.lot_id WHERE lots.id = $id;";
-      $result_current = mysqli_query($con, $sql_current);
-      if (!$result_current) {
-        exit;
-      }
-      $lot_max_bet = mysqli_fetch_assoc($result_current);
-      if($lot_max_bet === NULL){
-        $lmb = 0;
-      }
-      $lmb = $lot_max_bet['MAX(cost)'];
       // Получаю все ставки
       $sql_bets = "SELECT bets.id FROM bets JOIN lots ON lots.id = bets.lot_id WHERE lots.id = $id;";
       $result_bet = mysqli_query($con, $sql_bets);
@@ -46,15 +36,6 @@
       //Функция подсчета времени до закрытия лота
       $result_time = deletion_of_lot($lot['date_delection']);
       //Имя автора ставки для лота и размер ставки
-      $sql_author_name = "SELECT users.name AS NAME, cost AS COST, time_bet AS TIME, user_id, lots.id FROM users INNER JOIN bets ON users.id = bets.user_id INNER JOIN lots ON lots.id = bets.lot_id WHERE lots.id = $id;";
-      $author_name = mysqli_query($con, $sql_author_name);
-      $author = mysqli_fetch_all($author_name, MYSQLI_ASSOC);
-      $when = deletion_of_lot($author['TIME']);
-      if(!$author){
-        $author['NAME'] = '';
-        $author['COST'] = '';
-        $when = '';
-      }
 ?>
 <!DOCTYPE html>
 <html lang="ru">
@@ -137,7 +118,7 @@
               <div class="lot-item__rate">
                 <span class="lot-item__amount">Текущая цена</span>
                 <span class="lot-item__cost">
-                  <?= $lot['first_price'] + $lmb; ?>
+                <p> 10 999 </p>
                </span>
               </div>
               <div class="lot-item__min-cost">
@@ -154,13 +135,63 @@
             </form>
           </div>
           <div class="history">
-            <h3>История ставок (<span><?= $how_many_bets; ?></span>)</h3>
             <table class="history__list">
               <tr class="history__item">
-                <td class="history__name"><?= htmlspecialchars($author['NAME']); ?></td>
-                <td class="history__price"><?= htmlspecialchars($author['cost']); ?></td>
-                <td class="history__time"><?= $when; ?></td>
+                <h3>История ставок (<span>10</span>)</h3>
+                <table class="history__list">
+                  <tr class="history__item">
+                    <td class="history__name">Иван</td>
+                    <td class="history__price">10 999 р</td>
+                    <td class="history__time">5 минут назад</td>
+                  </tr>
+                  <tr class="history__item">
+                    <td class="history__name">Константин</td>
+                    <td class="history__price">10 999 р</td>
+                    <td class="history__time">20 минут назад</td>
+                  </tr>
+                  <tr class="history__item">
+                    <td class="history__name">Евгений</td>
+                    <td class="history__price">10 999 р</td>
+                    <td class="history__time">Час назад</td>
+                  </tr>
+                  <tr class="history__item">
+                    <td class="history__name">Игорь</td>
+                    <td class="history__price">10 999 р</td>
+                    <td class="history__time">19.03.17 в 08:21</td>
+                  </tr>
+                  <tr class="history__item">
+                    <td class="history__name">Енакентий</td>
+                    <td class="history__price">10 999 р</td>
+                    <td class="history__time">19.03.17 в 13:20</td>
+                  </tr>
+                  <tr class="history__item">
+                    <td class="history__name">Семён</td>
+                    <td class="history__price">10 999 р</td>
+                    <td class="history__time">19.03.17 в 12:20</td>
+                  </tr>
+                  <tr class="history__item">
+                    <td class="history__name">Илья</td>
+                    <td class="history__price">10 999 р</td>
+                    <td class="history__time">19.03.17 в 10:20</td>
+                  </tr>
+                  <tr class="history__item">
+                    <td class="history__name">Енакентий</td>
+                    <td class="history__price">10 999 р</td>
+                    <td class="history__time">19.03.17 в 13:20</td>
+                  </tr>
+                  <tr class="history__item">
+                    <td class="history__name">Семён</td>
+                    <td class="history__price">10 999 р</td>
+                    <td class="history__time">19.03.17 в 12:20</td>
+                  </tr>
+                  <tr class="history__item">
+                    <td class="history__name">Илья</td>
+                    <td class="history__price">10 999 р</td>
+                    <td class="history__time">19.03.17 в 10:20</td>
+                  </tr>
+                </table>
               </tr>
+
             </table>
           </div>
         </div>
