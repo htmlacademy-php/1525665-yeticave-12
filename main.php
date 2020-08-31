@@ -18,7 +18,7 @@
         </div>
         <ul class="lots__list">
             <?php
-              foreach ($products as $product): 
+              foreach ($products as $product):
               $result_time = deletion_of_lot($product['date_delection']);
             ?>
             <li class="lots__item lot">
@@ -26,8 +26,10 @@
                     <img src="<?=$product['url']; ?>" width="350" height="260" alt="">
               </div>
               <div class="lot__info">
+                <?php
+                ?>
                  <span class="lot__category"><?=$product['category_name'];?></span>
-                  <h3 class="lot__title">  <a class="text-link" href="pages/lot.php"><?= htmlspecialchars($product['name']);?></a></h3>
+                  <h3 class="lot__title">  <a class="text-link" href="lot.php<?= "?id=" . $product['lot_url'];?>"><?= htmlspecialchars($product['name']);?></a></h3>
                   <div class="lot__state">
                       <div class="lot__rate">
                           <span class="lot__amount">Стартовая цена</span>
