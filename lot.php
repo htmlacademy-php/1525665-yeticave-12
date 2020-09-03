@@ -1,9 +1,10 @@
 
 <?php
     require_once("./function.php");
-    if (isset($_GET['id'])) {
-          $id = $_GET['id'];
-        }
+    $id = $_GET['id'] ?? null;
+    if (!$id) {
+      header("Location: /pages/404.html");
+    }
     // Подключаюсь к БД
     $con = mysqli_connect("localhost", "root", "", "yeticave");
     if ($con == false) {
