@@ -28,9 +28,6 @@
               <div class="lot__info">
                 <?php
                 $lot_url = "?id=" . $product['lot_url'];
-                if (!$product['lot_url']) {
-                  header("Location: /pages/404.html");
-                }
                 ?>
                  <span class="lot__category"><?=$product['category_name'];?></span>
                   <h3 class="lot__title">  <a class="text-link" href="lot.php<?= $lot_url; ?>"><?= htmlspecialchars($product['name']);?></a></h3>

@@ -1,10 +1,9 @@
-
 <?php
-    require_once("./function.php");
     $id = $_GET['id'] ?? null;
     if (!$id) {
       header("Location: /pages/404.html");
     }
+    require_once("./function.php");
     // Подключаюсь к БД
     $con = mysqli_connect("localhost", "root", "", "yeticave");
     if ($con == false) {
@@ -15,7 +14,7 @@
       $sql_lot = "SELECT categories.name AS category_name, lots.name, lots.id, description, first_price, url, date_delection, bet_step FROM lots JOIN categories ON categories.id = lots.category_id WHERE lots.id = $id;";
       $result_lot = mysqli_query($con, $sql_lot);
       if (!$result_lot) {
-        exit;
+        header("Location: /pages/404.html");
       }
       $lot_info = mysqli_fetch_all($result_lot, MYSQLI_ASSOC);
       $lot = $lot_info[0];
