@@ -20,7 +20,7 @@
           <div class="lot-item__rate">
             <span class="lot-item__amount">Текущая цена</span>
             <span class="lot-item__cost">
-            <p> 10 999 </p>
+            <p><?=$current; ?></p>
            </span>
           </div>
           <div class="lot-item__min-cost">
