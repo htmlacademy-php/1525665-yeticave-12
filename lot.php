@@ -21,7 +21,7 @@
       exit;
     }
       $result_time = deletion_of_lot($lot['date_delection']);
-      // Получаю максимальную ставку для того, чтобы сложить ее с первоначальной ценой
+      // Получаю максимальную ставку для того, чтобы сложить ее с первоначальной ценой и получить текущую цену
       $sql_current = "SELECT MAX(cost) AS cost, lot_id FROM bets JOIN lots ON lots.id = bets.lot_id WHERE lots.id = $id;";
       $result_current = mysqli_query($con, $sql_current);
       if (!$result_current) {
@@ -29,12 +29,10 @@
       }
       $lot_max_bet = mysqli_fetch_assoc($result_current);
       $lmb = $lot_max_bet['cost'];
-      if($lot_max_bet === NULL){
-        $lmb = 0;
+      if(!$lmb){
+        $lmb = $lot['bet_step'];
       }
-      $current = $lmb + $lot['first_price'];
-       //Считаю кол-во ставок
-       $content = include_template('lot.php', ['lot' => $lot, 'categories' => $categories, 'current' => $current, 'result_time' => $result_time]);
-       $layout_content = include_template('layout.php', ['content' => $content, 'title' => 'Главная', 'categories' => $categories, 'is_auth' => $is_auth, 'user_name' => 'Илья']);
-       print($layout_content);
+      $content = include_template('lot.php', ['lot' => $lot, 'categories' => $categories, 'result_time' => $result_time, 'lmb' => $lmb]);
+      $layout_content = include_template('layout.php', ['content' => $content, 'title' => $lot['name'], 'categories' => $categories, 'is_auth' => $is_auth, 'user_name' => 'Илья']);
+      print($layout_content);
 ?>
