@@ -27,7 +27,7 @@
               </div>
               <div class="lot__info">
                 <?php
-                $lot_url = "?id=" . $product['lot_url'];
+                $lot_url = "?id=" . http_build_query($product);
                 ?>
                  <span class="lot__category"><?=$product['category_name'];?></span>
                   <h3 class="lot__title">  <a class="text-link" href="lot.php<?= $lot_url; ?>"><?= htmlspecialchars($product['name']);?></a></h3>
@@ -36,14 +36,13 @@
                           <span class="lot__amount">Стартовая цена</span>
                          <span class="lot__cost"> <?= htmlspecialchars(format_sum($product['first_price'])); ?></span>
                       </div>
-                      <div class="lot__timer timer <?php
-                      if ($result_time[0] < 1){
-                     echo ' timer--finishing';
-                   };
-                       ?>"
-                       >
-                          <?=  $rest_time = implode(":", $result_time);
-                          ?>
+                      <div class="lot__timer timer
+                          <?php
+                               if ($result_time[0] < 1){
+                                  echo ' timer--finishing';
+                              };
+                          ?>">
+                          <?=  $rest_time = implode(":", $result_time);?>
                       </div>
                     </div>
                 </div>
