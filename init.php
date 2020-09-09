@@ -1,13 +1,13 @@
 <?php
-  $con = mysqli_connect("localhost", "root", "", "yeticave");
-  if ($con == false) {
+  $connection = mysqli_connect("localhost", "root", "", "yeticave");
+  if ($connection === false) {
     exit;
   }
-  mysqli_set_charset($con, "utf8");
-  $sql_cat = "SELECT name, id, img FROM categories;";
-  $result_cat = mysqli_query($con, $sql_cat);
-  if (!$result_cat) {
+  mysqli_set_charset($connection, "utf8");
+  $sql_categories = "SELECT name, id, img FROM categories;";
+  $result_categories = mysqli_query($connection, $sql_categories);
+  if (!$result_categories) {
     exit;
   }
-  $categories = mysqli_fetch_all($result_cat, MYSQLI_ASSOC);
+  $categories = mysqli_fetch_all($result_categories, MYSQLI_ASSOC);
 ?>
