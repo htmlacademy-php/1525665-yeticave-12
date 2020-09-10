@@ -2,11 +2,11 @@ USE yeticave;
 INSERT INTO categories (name, img)
   VALUES
   ('Доски и лыжи', 'boards'),
-  ('Крепления', 'attachments'),
+  ('Крепления', 'attachment'),
   ('Ботинки', 'boots'),
-  ('Одежда', 'clothes'),
+  ('Одежда', 'clothing'),
   ('Инструменты', 'tools'),
-  ('Разное', 'differences');
+  ('Разное', 'other');
 
 INSERT INTO users (register_date, name, email, contacts, password)
   VALUES
@@ -90,14 +90,8 @@ INSERT INTO lots (date_creation, name, description, url, first_price, date_delec
        ('2019-01-17', 20000, 3, 2),
        ('2019-01-17', 25000, 2, 3);
 
-SELECT name, img FROM categories; -- Получил все категории
-
-SELECT lots.name, first_price, url, categories.name, date_creation, first_price + MAX(bets.cost)
-FROM lots LEFT JOIN bets ON lots.id = bets.lot_id JOIN categories ON lots.category_id = categories.id
-WHERE date_delection > NOW()
-GROUP BY lots.name, first_price, url, date_creation, categories.name
-ORDER BY date_creation DESC;
-
+SELECT name FROM categories; -- Получил все категории
+SELECT categories.name, lots.name, first_price, url, bet_step FROM lots JOIN categories ON categories.id = lots.category_id;
 SELECT lots.name, first_price, url, bet_step, categories.name FROM lots JOIN categories ON categories.id = lots.category_id WHERE lots.id = 5;
 UPDATE lots SET name = '2014 Rossignol District Snowboard' WHERE  id = 1;
-SELECT cost, user_id, lot_id, id, time_bet FROM bets WHERE id = 3 ORDER BY time_bet DESC;
+SELECT cost FROM bets ORDER BY time_bet DESC;
