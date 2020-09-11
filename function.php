@@ -25,14 +25,5 @@
     $rest_time = [$hours_count, $minutes_count];
     return $rest_time;
   }
-
-  function getPostVal($name) {
-    return $_POST[$name] ?? "";
-}
-function validateFilled($name) {
-  if (empty($_POST[$name])) {
-  return "Это поле должно быть заполнено";
-    }
-}
-
+  
 ?>
