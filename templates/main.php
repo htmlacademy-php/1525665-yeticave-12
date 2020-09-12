@@ -6,8 +6,8 @@
             <?php
                 foreach($categories as $category):
                ?>
-            <li class="promo__item promo__item--boards">
-                    <a class="promo__link" href="pages/all-lots.html"><?=$category; ?></a>
+            <li class="promo__item promo__item--<?=$category['img']; ?>">
+                    <a class="promo__link" href="pages/all-lots.html"><?=$category['name']; ?></a>
               </li>
               <?php endforeach; ?>
         </ul>
@@ -17,22 +17,32 @@
             <h2>Открытые лоты</h2>
         </div>
         <ul class="lots__list">
-            <?php foreach ($products as $product): ?>
+            <?php
+              foreach ($products as $product):
+              $result_time = deletion_of_lot($product['date_delection']);
+            ?>
             <li class="lots__item lot">
               <div class="image">
-                    <img src="<?=$product['image']; ?>" width="350" height="260" alt="">
+                    <img src="<?=$product['url']; ?>" width="350" height="260" alt="">
               </div>
               <div class="lot__info">
-                 <span class="lot__category"><?=$product['category'];?></span>
-                  <h3 class="lot__title">  <a class="text-link" href="pages/lot.html"><?= htmlspecialchars($product['title']);?></a></h3>
+                <?php
+                $lot_url = 'lot.php?' . http_build_query(['id' => $product['id'] ]);
+                ?>
+                 <span class="lot__category"><?=$product['category_name'];?></span>
+                  <h3 class="lot__title">  <a class="text-link" href="<?= $lot_url; ?>"><?= htmlspecialchars($product['name']);?></a></h3>
                   <div class="lot__state">
                       <div class="lot__rate">
                           <span class="lot__amount">Стартовая цена</span>
-                         <span class="lot__cost"> <?= htmlspecialchars(format_sum($product['cost'])); ?></span>
+                         <span class="lot__cost"> <?= htmlspecialchars(format_sum($product['first_price'])); ?></span>
                       </div>
-
-                      <div class="lot__timer timer">
-                          12:23
+                      <div class="lot__timer timer
+                          <?php
+                               if ($result_time[0] < 1){
+                                  echo ' timer--finishing';
+                              };
+                          ?>">
+                          <?=  $rest_time = implode(":", $result_time);?>
                       </div>
                     </div>
                 </div>
