@@ -1,3 +1,4 @@
+<main>
 <nav class="nav">
     <ul class="nav__list container">
       <?php foreach ($categories as $cat): ?>
@@ -13,7 +14,7 @@
       <div class="form__item"> <!-- form__item--invalid -->
         <label for="lot-name">Наименование <sup>*</sup></label>
         <input id="lot-name" type="text" name="title" placeholder="Введите наименование лота" value="<?=getPostVal('title'); ?>">
-      
+
       </div>
       <div class="form__item">
         <label for="category">Категория <sup>*</sup></label>
@@ -58,3 +59,4 @@
     </div>
     <button type="submit" class="button">Добавить лот</button>
   </form>
+</main>
