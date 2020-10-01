@@ -29,5 +29,17 @@
   function getPostVal($name) {
     return $_POST[$name] ?? "";
 }
+function validateFilled($name) {
+ if (empty($_POST[$name])) {
+     return "Это поле должно быть заполнено";
+ }
+}
 
+function validateCategory($id, $allowed_list) {
+    if (!in_array($id, $allowed_list)) {
+        return "Указана несуществующая категория";
+    }
+
+    return null;
+}
 ?>
