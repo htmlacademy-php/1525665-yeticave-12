@@ -11,50 +11,77 @@
   <form class="form form--add-lot container" action="add.php" method="post" enctype="multipart/form-data"> <!-- form--invalid -->
     <h2>Добавление лота</h2>
     <div class="form__container-two">
-      <div class="form__item"> <!-- form__item--invalid -->
+        <?php $classname = isset($errors['title']) ? "form__item--invalid" : ""; ?>
+      <div class="form__item <?= $classname ?>"> <!-- form__item--invalid -->
         <label for="lot-name">Наименование <sup>*</sup></label>
-        <input id="lot-name" type="text" name="title" placeholder="Введите наименование лота" value="<?=getPostVal('title'); ?>">
-
+        <input id="lot-name" type="text" name="title" placeholder="Введите наименование лота" value="<?= htmlspecialchars(getPostVal('title')); ?>">
+        <?php if(isset($errors['title'])){
+         print('<span class="form__error">' . $errors['title'] . '</span>');
+      }
+      ?>
       </div>
       <div class="form__item">
-        <label for="category">Категория <sup>*</sup></label>
-        <select id="category" name="category">
-          <?php foreach($categories as $category): ?>
-          <option><?= $category['name']; ?></option>
+        <label for="category_id">Категория <sup>*</sup></label>
+        <select id="category_id" name="category_id">
+          <?php foreach($categories as $cat): ?>
+            <option value="<?= htmlspecialchars($_POST['category_id']); ?>"
+                        <?php if ($cat['id'] == getPostVal('category_id')): ?>selected<?php endif; ?>><?=$cat['name'];
+                        ?></option>
             <?php endforeach; ?>
         </select>
         <span class="form__error">Выберите категорию</span>
       </div>
     </div>
-    <div class="form__item form__item--wide">
+    <?php $classname = isset($errors['description']) ? "form__item--invalid" : ""; ?>
+    <div class="form__item form__item--wide <?= $classname ?>">
       <label for="message">Описание <sup>*</sup></label>
-      <textarea id="message" name="description" placeholder="Напишите описание лота" value="<?=getPostVal('description'); ?>"></textarea>
-      <span class="form__error">Напишите описание лота</span>
+      <textarea id="message" name="description" placeholder="Напишите описание лота" value="<?= htmlspecialchars(getPostVal('description')); ?>"></textarea>
+      <?php if(isset($errors['description'])){
+       print('<span class="form__error">' . $errors['description'] . '</span>');
+    }
+    ?>
     </div>
-    <div class="form__item form__item--file">
+    <div class="form__item form__item--file form__item--invalid">
       <label>Изображение <sup>*</sup></label>
-      <div class="form__input-file">
-        <input class="visually-hidden" type="file" id="lot-img" value="<?=getPostVal('lot-img'); ?>">
-        <label for="lot-img">
+        <?php $classname = isset($errors['lot-img']) ? "form__item--invalid" : ""; ?>
+      <div class="form__input-file <?= $classname ?>">
+        <input class="visually-hidden" type="file" name="lot-img" id="lot-img" value="<?= getPostVal('lot-img'); ?>">
+        <label for="lot-img" value="<?=getPostVal('lot-img'); ?>">
           Добавить
         </label>
+        <?php if(isset($errors['lot-img'])){
+         print('<span class="form__error">' . $errors['lot-img'] . '</span>');
+       }
+        ?>
       </div>
     </div>
     <div class="form__container-three">
-      <div class="form__item form__item--small">
-        <label for="lot-rate">Начальная цена <sup>*</sup></label>
-        <input id="lot-rate" type="text" name="lot-rate" placeholder="0" value="<?=getPostVal('lot-rate'); ?>">
-        <span class="form__error">Введите начальную цену</span>
+      <?php $classname = isset($errors['first_price']) ? "form__item--invalid" : ""; ?>
+      <div class="form__item form__item--small <?= $classname ?>">
+        <label for="first_price">Начальная цена <sup>*</sup></label>
+        <input id="first_price" type="text" name="first_price" placeholder="0" value="<?= htmlspecialchars(getPostVal('first_price')); ?>">
+        <?php if(isset($errors['first_price'])){
+         print('<span class="form__error">' . $errors['first_price'] . '</span>');
+       }
+        ?>
       </div>
-      <div class="form__item form__item--small">
+      <?php $classname = isset($errors['bet_step']) ? "form__item--invalid" : ""; ?>
+      <div class="form__item form__item--small <?= $classname ?>">
         <label for="lot-step">Шаг ставки <sup>*</sup></label>
-        <input id="lot-step" type="text" name="lot-step" placeholder="0" value="<?=getPostVal('lot-step'); ?>">
-        <span class="form__error">Введите шаг ставки</span>
+        <input id="bet_step" type="text" name="bet_step" placeholder="0" value="<?= htmlspecialchars(getPostVal('bet_step')); ?>">
+        <?php if(isset($errors['bet_step'])){
+         print('<span class="form__error">' . $errors['bet_step'] . '</span>');
+       }
+        ?>
       </div>
       <div class="form__item">
+        <?php $classname = isset($errors['date_delection']) ? "form__item--invalid" : ""; ?>
         <label for="lot-date">Дата окончания торгов <sup>*</sup></label>
-        <input class="form__input-date" id="lot-date" type="text" name="lot-date" placeholder="Введите дату в формате ГГГГ-ММ-ДД" value="<?=getPostVal('lot-date'); ?>">
-        <span class="form__error">Введите дату завершения торгов</span>
+        <input class="form__input-date <?= $classname ?>" id="date_delection" type="text" name="date_delection" placeholder="Введите дату в формате ГГГГ-ММ-ДД" value="<?= htmlspecialchars(getPostVal('date_delection')); ?>">
+        <?php if (isset($errors['date_delection'])){
+           print('<span class="form__error">Введите дату завершения торгов</span>');
+        }
+          ?>
       </div>
     </div>
     <button type="submit" class="button">Добавить лот</button>
