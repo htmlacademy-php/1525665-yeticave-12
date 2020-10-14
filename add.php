@@ -12,57 +12,48 @@
 $cats_ids = array_column($categories, 'id');
    $lot = $_POST;
   $rules = [
-    'category_id' => function($value) use ($cats_ids) {
-        return validateCategory($value, $cats_ids);
+    'category_id' => function() use ($cats_ids) {
+        return validateCategory('category_id', $cats_ids);
     },
     'title' => function() {
         return validateFilled('title');
     },
     'first_price' => function() {
-        return validateFilled('first_price');
+        return validatePrice('first_price');
     },
     'description' => function() {
         return validateFilled('description');
     },
     'bet_step' => function() {
-        return validateFilled('bet_step');
+        return validateBet('bet_step'); //
     },
     'date_delection' => function() {
-        return is_date_valid('date_delection');
+      $date = $_POST['date_delection'];
+      if (!is_date_valid($date)){
+          return "Неправильный формат даты";
+      }
+      else{
+        return null;
+      }
     },
     'lot-img' => function() {
-        return validateFilled('lot-img');
+        $lotimg = $_FILES['lot-img']['name'];
+        return validateImage($lotimg);// функция наличия файла('lot-img');
     }
 ];
 
-  foreach ($_POST as $key => $value) {
-    if (isset($rules[$key])) {
-      $rule = $rules[$key];
-      $errors[$key] = $rule();
-      }
-    }
 if ($_SERVER['REQUEST_METHOD'] == 'POST') {
-      if (!empty($_FILES['lot-img']['name'])) {
-		      $tmp_name = $_FILES['lot-img']['tmp_name'];
-		        $path = $_FILES['lot-img']['name'];
-            $filename = uniqid() . $tmp_name;
-		              if ($$_FILES['tmp_name'] !== "image/jpeg" or "image/jpg" or "image/png") {
-			                 $errors['file'] = 'Загрузите картинку в формате jpg, jpeg или png';
-		                   }
-		                   else {
-			                       move_uploaded_file($tmp_name, 'uploads/' . $filename);
-			                          $lot['path'] = $filename;
-		                        }
-	                    }
-	                   else {
-		               $errors['file'] = 'Вы не загрузили фото';
-                 }
-    }
+  foreach ($lot as $key => $value) {
+       if (isset($rules[$key])) {
+           $rule = $rules[$key];
+           $errors[$key] = $rule($value);
+       }
+   }
+}
 
 if (empty($errors)){
   if ($_SERVER['REQUEST_METHOD'] == 'POST') {
       $lot = $_POST;
-
       $filename = uniqid() . $file_name;
       $lot['path'] = $filename;
       if (isset($_FILES['lot-img'])){
@@ -78,9 +69,6 @@ if (empty($errors)){
 
         header("Location: lot.php?id=" . $lot_id);
       }
-      else {
-            $content = include_template('error.php', ['error' => mysqli_error($link)]);
-        }
     }
   }
 $errors = array_filter($errors);
