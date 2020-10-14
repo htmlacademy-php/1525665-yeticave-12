@@ -42,4 +42,58 @@ function validateCategory($id, $allowed_list) {
 
     return null;
 }
+ function validateImage($file){
+ if (!empty($_FILES['lot-img']['name'])) {
+     $tmp_name = $_FILES['lot-img']['tmp_name'];
+       $_FILES['tmp_name'] = $file_name;
+       $path = $_FILES['lot-img']['name'];
+       $filename = uniqid() . $tmp_name;
+             if($file_name !== "image/jpeg" && $file_name !== "image/jpg" && $file_name !== "image/png"){
+                  $errors['lot-img'] = "Загрузите картинку в формате jpg, jpeg или png";
+                  return $errors['lot-img'];
+                }
+            }
+
+        elseif (empty($_FILES['lot-img']['name'])) {
+          return "Загрузите фото";
+        }
+        else{
+          return null;
+        }
+      }
+
+function validatePrice($price){
+  if (empty($_POST['first_price'])) {
+      return "Это поле должно быть заполнено";
+  }
+  elseif (!is_numeric($price)) {
+    return "Это поле должно быть заполнено числом";
+  }
+  else{
+    if($price > 0){
+      return null;
+    }
+    else{
+      return "Начальная цена должна быть положительной";
+    }
+  }
+}
+
+function validateBet($bet){
+  if (empty($_POST['bet_step'])) {
+      return "Это поле должно быть заполнено";
+  }
+  elseif (!is_numeric($bet)) {
+    return "Это поле должно быть заполнено числом";
+  }
+  else{
+    if($bet > 0 && is_int($bet)){
+      return null;
+    }
+    else{
+      return "Ставка для лота должна быть целым положительным числом";
+    }
+  }
+}
+
 ?>
