@@ -11,6 +11,7 @@
 //}
 $cats_ids = array_column($categories, 'id');
    $lot = $_POST;
+   $files = $_FILES;
   $rules = [
     'category_id' => function() use ($cats_ids) {
         return validateCategory('category_id', $cats_ids);
@@ -30,7 +31,10 @@ $cats_ids = array_column($categories, 'id');
     'date_delection' => function() {
       $date = $_POST['date_delection'];
       if (!is_date_valid($date)){
-          return "Неправильный формат даты";
+          return "Введите дату завершения торгов в формате ГГГГ-ММ-ДД";
+      }
+      elseif(strtotime($date) < time()){
+        return "Введите дату хотя бы следующего дня или позже";
       }
       else{
         return null;
@@ -50,16 +54,26 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
        }
    }
 }
-
+foreach ($files as $key => $value) {
+     if (isset($rules[$key])) {
+         $rule = $rules[$key];
+         $errors[$key] = $rule($value);
+     }
+ }
 if (empty($errors)){
   if ($_SERVER['REQUEST_METHOD'] == 'POST') {
       $lot = $_POST;
+
+      $finfo = finfo_open(FILEINFO_MIME_TYPE);
+      $tmp_name = $_FILES['tmp_name'];
+      $file_name = finfo_file($finfo, $tmp_name);
+
       $filename = uniqid() . $file_name;
       $lot['path'] = $filename;
-      if (isset($_FILES['lot-img'])){
-        move_uploaded_file($_FILES['lot-img']['tmp_name'], 'uploads/' . $filename);
-      }
-      $sql = 'INSERT INTO lots (date_creation, title, first_price, category_id, description, bet_step, date_delection, path) VALUES (NOW(), ?, 1, ?, ?, ?, ?, ?)';
+      $path = $_FILES['lot-img']['name'];
+      move_uploaded_file($_FILES['lot-img']['tmp_name'], 'uploads/' . $filename);
+
+      $sql = 'INSERT INTO lots (date_creation, title, user_id, first_price, category_id, description, bet_step, date_delection, path) VALUES (NOW(), ?, 1, ?, ?, ?, ?, ?, ?)';
 
       $stmt = db_get_prepare_stmt($link, $sql, $lot);
       $res = mysqli_stmt_execute($stmt);
@@ -68,6 +82,9 @@ if (empty($errors)){
         $lot_id = mysqli_insert_id($link);
 
         header("Location: lot.php?id=" . $lot_id);
+      }
+      else{
+        print("Ошибка добавления лота!");
       }
     }
   }
