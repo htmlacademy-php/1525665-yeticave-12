@@ -44,13 +44,11 @@ function validateCategory($id, $allowed_list) {
 }
  function validateImage($file){
  if (!empty($_FILES['lot-img']['name'])) {
+     $finfo = finfo_open(FILEINFO_MIME_TYPE);
      $tmp_name = $_FILES['lot-img']['tmp_name'];
-       $_FILES['tmp_name'] = $file_name;
-       $path = $_FILES['lot-img']['name'];
-       $filename = uniqid() . $tmp_name;
-             if($file_name !== "image/jpeg" && $file_name !== "image/jpg" && $file_name !== "image/png"){
-                  $errors['lot-img'] = "Загрузите картинку в формате jpg, jpeg или png";
-                  return $errors['lot-img'];
+     $file_type = finfo_file($finfo, $tmp_name);
+             if($file_type !== "image/jpeg" && $file_type !== "image/png"){;
+                  return  "Загрузите картинку в формате jpg, jpeg или png";
                 }
             }
 
@@ -63,36 +61,41 @@ function validateCategory($id, $allowed_list) {
       }
 
 function validatePrice($price){
-  if (empty($_POST['first_price'])) {
+  if (empty($_POST['first_price'])){
       return "Это поле должно быть заполнено";
   }
-  elseif (!is_numeric($price)) {
-    return "Это поле должно быть заполнено числом";
+  elseif (ctype_digit(($_POST['first_price'])) === FALSE && $_POST['first_price'] != '0') {
+    return "Это поле должно быть заполнено целым положительным числом";
   }
   else{
-    if($price > 0){
       return null;
     }
-    else{
-      return "Начальная цена должна быть положительной";
-    }
   }
-}
 
 function validateBet($bet){
-  if (empty($_POST['bet_step'])) {
+  if (empty($_POST['bet_step'])){
       return "Это поле должно быть заполнено";
   }
-  elseif (!is_numeric($bet)) {
-    return "Это поле должно быть заполнено числом";
+  elseif (ctype_digit(($_POST['bet_step'])) === FALSE && $_POST['bet_step'] != '0'){
+    return "Это поле должно быть заполнено целым положительным числом";
   }
   else{
-    if($bet > 0 && is_int($bet)){
       return null;
     }
-    else{
-      return "Ставка для лота должна быть целым положительным числом";
-    }
+  }
+
+function validateDate($date){
+  $date = date_create($date);
+  $today = date_create(date("Y-m-d"));
+  $diff = date_diff($today, $date);
+  $days_count = date_interval_format($diff, '%d');
+  $months_count = date_interval_format($diff, '%m');
+  $years_count = date_interval_format($diff, '%Y');
+  if($days_count > 0 && $months_count > 0 && $years_count > 0){
+    return true;
+  }
+  else{
+    return false;
   }
 }
 
