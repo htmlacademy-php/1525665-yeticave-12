@@ -24,9 +24,9 @@
         <label for="category_id">Категория <sup>*</sup></label>
         <select id="category_id" name="category_id">
           <?php foreach($categories as $cat): ?>
-            <option value="<?= htmlspecialchars($_POST['category_id']); ?>"
-                        <?php if ($cat['id'] == getPostVal('category_id')): ?>selected<?php endif; ?>><?=$cat['name'];
-                        ?></option>
+            <option value="<?= htmlspecialchars($_POST['category_id']); ?>">
+              <?php if ($cat['id'] == getPostVal('category_id')): ?>selected<?php endif; ?> <?=$cat['name'];?>
+            </option>
             <?php endforeach; ?>
         </select>
         <span class="form__error">Выберите категорию</span>
@@ -34,8 +34,8 @@
     </div>
     <?php $classname = isset($errors['description']) ? "form__item--invalid" : ""; ?>
     <div class="form__item form__item--wide <?= $classname ?>">
-      <label for="message">Описание <sup>*</sup></label>
-      <textarea id="message" name="description" placeholder="Напишите описание лота" value="<?= htmlspecialchars(getPostVal('description')); ?>"></textarea>
+      <label for="description">Описание <sup>*</sup></label>
+      <textarea id="description" name="description" placeholder="Напишите описание лота" value="<?= htmlspecialchars(getPostVal('description')); ?>"></textarea>
       <?php if(isset($errors['description'])){
        print('<span class="form__error">' . $errors['description'] . '</span>');
     }
@@ -52,7 +52,7 @@
         <?php if(isset($errors['lot-img'])){
          print('<span class="form__error">' . $errors['lot-img'] . '</span>');
        }
-        ?>
+      ?>
       </div>
     </div>
     <div class="form__container-three">
@@ -74,10 +74,11 @@
        }
         ?>
       </div>
-      <div class="form__item">
-        <?php $classname = isset($errors['date_delection']) ? "form__item--invalid" : ""; ?>
+      <?php $classname = isset($errors['date_delection']) ? "form__item--invalid" : ""; ?>
+      <div class="form__item <?= $classname ?>">
+
         <label for="lot-date">Дата окончания торгов <sup>*</sup></label>
-        <input class="form__input-date <?= $classname ?>" id="date_delection" type="text" name="date_delection" placeholder="Введите дату в формате ГГГГ-ММ-ДД" value="<?= htmlspecialchars(getPostVal('date_delection')); ?>">
+        <input class="form__input-date" id="date_delection" type="text" name="date_delection" placeholder="Введите дату в формате ГГГГ-ММ-ДД" value="<?= htmlspecialchars(getPostVal('date_delection')); ?>">
         <?php if (isset($errors['date_delection'])){
            print('<span class="form__error">Введите дату завершения торгов</span>');
         }
