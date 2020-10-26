@@ -2,31 +2,36 @@
       require_once("function.php");
       require_once("init.php");
       require_once("helpers.php");
-  //
+   is_writeable('uploads');
   $is_auth = rand(0, 1);
   $errors = [];
-  //if (!$link) {
-    //$error = mysqli_connect_error();
-  //  show_error($content, $error);
-//}
-$cats_ids = array_column($categories, 'id');
-   $lot = $_POST;
-   $files = $_FILES;
+  $cats_ids = [];
+  $cats_ids = array_column($categories, 'id');
+  $lot = $_POST;
+  $files = $_FILES;
   $rules = [
-    'category_id' => function() use ($cats_ids) {
-        return validateCategory('category_id', $cats_ids);
+    'category_id' => function($value) use ($cats_ids) {
+        return validateCategory($value, $cats_ids);
     },
     'title' => function() {
-        return validateFilled('title');
+        if (validateFilled('title') === false){
+        return "Это поле должно быть заполнено";
+      }
     },
     'first_price' => function() {
-        return validatePrice('first_price');
+         if(validatePrice('first_price') === false){
+           return "Это поле должно быть заполнено целым положительным числом";
+      }
     },
     'description' => function() {
-        return validateFilled('description');
+        if (validateFilled('description') === false){
+        return "Это поле должно быть заполнено";
+      }
     },
     'bet_step' => function() {
-        return validateBet('bet_step'); //
+        if(validateBet('bet_step') === false){
+        return "Это поле должно быть заполнено целым положительным числом";
+       } //
     },
     'date_delection' => function() {
       $date = $_POST['date_delection'];
@@ -36,13 +41,12 @@ $cats_ids = array_column($categories, 'id');
       elseif(strtotime($date) < time()){
         return "Введите дату хотя бы следующего дня или позже";
       }
-      else{
-        return null;
-      }
     },
     'lot-img' => function() {
         $lotimg = $_FILES['lot-img']['name'];
-        return validateImage($lotimg);// функция наличия файла('lot-img');
+        if(validateImage($lotimg) === false){
+        return "Загрузите картинку в формате jpg, jpeg или png";// функция наличия файла('lot-img');
+      }
     }
 ];
 
@@ -50,30 +54,40 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
   foreach ($lot as $key => $value) {
        if (isset($rules[$key])) {
            $rule = $rules[$key];
-           $errors[$key] = $rule($value);
+           $result = $rules[$key];
+           $not_yet_errors = [];
+           $not_yet_errors[$key] = $rule($value);
+           if ($not_yet_errors[$key] !== null) {
+             $errors[$key] = $rule($value);
+           }
        }
    }
 }
 foreach ($files as $key => $value) {
-     if (isset($rules[$key])) {
+     if (isset($rules[$key]) && $rules[$key] !== null) {
          $rule = $rules[$key];
+         $result = $rule($value);
+         if($result !== null){
          $errors[$key] = $rule($value);
+       }
      }
- }
+}
+
+   var_dump($errors);
 if (empty($errors)){
   if ($_SERVER['REQUEST_METHOD'] == 'POST') {
       $lot = $_POST;
 
-      $finfo = finfo_open(FILEINFO_MIME_TYPE);
-      $tmp_name = $_FILES['tmp_name'];
-      $file_name = finfo_file($finfo, $tmp_name);
-
-      $filename = uniqid() . $file_name;
-      $lot['path'] = $filename;
-      $path = $_FILES['lot-img']['name'];
-      move_uploaded_file($_FILES['lot-img']['tmp_name'], 'uploads/' . $filename);
-
-      $sql = 'INSERT INTO lots (date_creation, title, user_id, first_price, category_id, description, bet_step, date_delection, path) VALUES (NOW(), ?, 1, ?, ?, ?, ?, ?, ?)';
+      ////
+          $file_name = $_FILES['lot-img']['name'];
+          $path_url = __DIR__ . '/uploads/';
+          if(!is_writeable($path_url)){
+            chmod($path_url, 777);
+          }
+          $file_path = __DIR__ . '/uploads/' . uniqid() . $file_name;
+          move_uploaded_file($_FILES['lot-img']['tmp_name'], $file_path);
+      $lot['url'] = $file_path;
+      $sql = 'INSERT INTO lots (date_creation, name, author, first_price, category_id, description, bet_step, date_delection, url) VALUES (NOW(), ?, 1, ?, ?, ?, ?, ?, ?)';
 
       $stmt = db_get_prepare_stmt($link, $sql, $lot);
       $res = mysqli_stmt_execute($stmt);

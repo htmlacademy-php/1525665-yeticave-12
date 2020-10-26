@@ -31,7 +31,10 @@
 }
 function validateFilled($name) {
  if (empty($_POST[$name])) {
-     return "Это поле должно быть заполнено";
+     return false;
+ }
+ else{
+   return true;
  }
 }
 
@@ -39,8 +42,6 @@ function validateCategory($id, $allowed_list) {
     if (!in_array($id, $allowed_list)) {
         return "Указана несуществующая категория";
     }
-
-    return null;
 }
  function validateImage($file){
  if (!empty($_FILES['lot-img']['name'])) {
@@ -48,55 +49,31 @@ function validateCategory($id, $allowed_list) {
      $tmp_name = $_FILES['lot-img']['tmp_name'];
      $file_type = finfo_file($finfo, $tmp_name);
              if($file_type !== "image/jpeg" && $file_type !== "image/png"){;
-                  return  "Загрузите картинку в формате jpg, jpeg или png";
+                  return  false;
                 }
-            }
 
-        elseif (empty($_FILES['lot-img']['name'])) {
-          return "Загрузите фото";
-        }
-        else{
-          return null;
-        }
+            }
+            else{
+              return false;
+            }
       }
 
 function validatePrice($price){
   if (empty($_POST['first_price'])){
-      return "Это поле должно быть заполнено";
+      return false;
   }
   elseif (ctype_digit(($_POST['first_price'])) === FALSE && $_POST['first_price'] != '0') {
-    return "Это поле должно быть заполнено целым положительным числом";
+    return false;
   }
-  else{
-      return null;
-    }
   }
 
 function validateBet($bet){
   if (empty($_POST['bet_step'])){
-      return "Это поле должно быть заполнено";
+      return false;
   }
   elseif (ctype_digit(($_POST['bet_step'])) === FALSE && $_POST['bet_step'] != '0'){
-    return "Это поле должно быть заполнено целым положительным числом";
-  }
-  else{
-      return null;
-    }
-  }
-
-function validateDate($date){
-  $date = date_create($date);
-  $today = date_create(date("Y-m-d"));
-  $diff = date_diff($today, $date);
-  $days_count = date_interval_format($diff, '%d');
-  $months_count = date_interval_format($diff, '%m');
-  $years_count = date_interval_format($diff, '%Y');
-  if($days_count > 0 && $months_count > 0 && $years_count > 0){
-    return true;
-  }
-  else{
     return false;
   }
-}
+  }
 
 ?>
