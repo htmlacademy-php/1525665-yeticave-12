@@ -10,4 +10,8 @@
     exit;
   }
   $categories = mysqli_fetch_all($result_categories, MYSQLI_ASSOC);
+  $link = mysqli_connect("localhost", "root", "", "yeticave");
+  if ($link === false) {
+    exit;
+  }
 ?>
