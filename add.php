@@ -2,7 +2,10 @@
       require_once("function.php");
       require_once("init.php");
       require_once("helpers.php");
-   is_writeable('uploads');
+   $link = mysqli_connect("localhost", "root", "", "yeticave");
+   if ($link === false) {
+     exit;
+   }
   $is_auth = rand(0, 1);
   $errors = [];
   $cats_ids = [];
@@ -89,15 +92,16 @@ if (empty($errors)){
       $lot['url'] = $file_path;
       $sql = 'INSERT INTO lots (date_creation, name, author, first_price, category_id, description, bet_step, date_delection, url) VALUES (NOW(), ?, 1, ?, ?, ?, ?, ?, ?)';
 
-      $stmt = db_get_prepare_stmt($link, $sql, $lot);
+      $stmt = db_get_prepare_stmt($connection, $sql, $lot);
       $res = mysqli_stmt_execute($stmt);
 
       if ($res) {
-        $lot_id = mysqli_insert_id($link);
+        $lot_id = mysqli_insert_id($connection);
 
         header("Location: lot.php?id=" . $lot_id);
       }
       else{
+        mysqli_error($connection);
         print("Ошибка добавления лота!");
       }
     }
