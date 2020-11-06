@@ -80,8 +80,6 @@ foreach ($files as $key => $value) {
 if (empty($errors)){
   if ($_SERVER['REQUEST_METHOD'] == 'POST') {
       $lot = $_POST;
-
-      ////
           $file_name = $_FILES['lot-img']['name'];
           $path_url = __DIR__ . '/uploads/';
           if(!is_writeable($path_url)){
@@ -89,10 +87,11 @@ if (empty($errors)){
           }
           $file_path = __DIR__ . '/uploads/' . uniqid() . $file_name;
           move_uploaded_file($_FILES['lot-img']['tmp_name'], $file_path);
+            $new_lot = [$_POST['title'], $_POST['first_price'], $_POST['category_id'], $_POST['description'], $_POST['bet_step'], $_POST['date_delection'], date("Y-m-d"), 1, $file_path];
       $lot['url'] = $file_path;
-      $sql = 'INSERT INTO lots (date_creation, name, author, first_price, category_id, description, bet_step, date_delection, url) VALUES (NOW(), ?, 1, ?, ?, ?, ?, ?, ?)';
+      $sql = 'INSERT INTO lots (name, first_price, category_id, description, bet_step, date_delection, date_creation, author, url) VALUES (NOW(), ?, ?, ?, ?, ?, ?, 1, ?)';
 
-      $stmt = db_get_prepare_stmt($connection, $sql, $lot);
+      $stmt = db_get_prepare_stmt($connection, $sql, $new_lot);
       $res = mysqli_stmt_execute($stmt);
 
       if ($res) {
@@ -101,8 +100,7 @@ if (empty($errors)){
         header("Location: lot.php?id=" . $lot_id);
       }
       else{
-        mysqli_error($connection);
-        print("Ошибка добавления лота!");
+        print("Ошибка добавления лота!" . mysqli_error($connection));
       }
     }
   }
