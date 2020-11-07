@@ -75,8 +75,6 @@ foreach ($files as $key => $value) {
        }
      }
 }
-
-   var_dump($errors);
 if (empty($errors)){
   if ($_SERVER['REQUEST_METHOD'] == 'POST') {
       $lot = $_POST;
