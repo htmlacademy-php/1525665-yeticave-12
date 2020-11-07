@@ -29,6 +29,9 @@
   function getPostVal($name) {
     return $_POST[$name] ?? "";
 }
+function getFilesVal($name) {
+  return $_FILES[$name] ?? "";
+}
 function validateFilled($name) {
  if (empty($_POST[$name])) {
      return false;
