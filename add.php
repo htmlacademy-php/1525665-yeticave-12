@@ -2,10 +2,6 @@
       require_once("function.php");
       require_once("init.php");
       require_once("helpers.php");
-   $link = mysqli_connect("localhost", "root", "", "yeticave");
-   if ($link === false) {
-     exit;
-   }
   $is_auth = rand(0, 1);
   $errors = [];
   $cats_ids = [];
