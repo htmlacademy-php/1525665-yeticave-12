@@ -48,7 +48,7 @@
       <label>Изображение <sup>*</sup></label>
         <?php $classname = isset($errors['lot-img']) ? "form__item--invalid" : ""; ?>
       <div class="form__input-file <?= $classname ?>">
-        <input class="visually-hidden" type="file" name="lot-img" id="lot-img" value="<?= getPostVal('lot-img'); ?>">
+        <input class="visually-hidden" type="file" name="lot-img" id="lot-img" value="<?= getFilesVal('lot-img'); ?>">
         <label for="lot-img" value="<?=getPostVal('lot-img'); ?>">
           Добавить
         </label>
