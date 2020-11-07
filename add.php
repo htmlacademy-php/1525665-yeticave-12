@@ -81,18 +81,18 @@ if (empty($errors)){
   if ($_SERVER['REQUEST_METHOD'] == 'POST') {
       $lot = $_POST;
           $file_name = $_FILES['lot-img']['name'];
-          $path_url = __DIR__ . '/uploads/';
-          if(!is_writeable($path_url)){
-            chmod($path_url, 777);
-          }
-          $file_path = __DIR__ . '/uploads/' . uniqid() . $file_name;
+          $uniq_url = uniqid();
+          $file_path = __DIR__ . '/uploads/' . $uniq_url . $file_name;
+          $file_path_db = 'uploads/' . $uniq_url . $file_name;
           move_uploaded_file($_FILES['lot-img']['tmp_name'], $file_path);
-            $new_lot = [$_POST['title'], $_POST['first_price'], $_POST['category_id'], $_POST['description'], $_POST['bet_step'], $_POST['date_delection'], date("Y-m-d"), 1, $file_path];
-      $lot['url'] = $file_path;
-      $sql = 'INSERT INTO lots (name, first_price, category_id, description, bet_step, date_delection, date_creation, author, url) VALUES (NOW(), ?, ?, ?, ?, ?, ?, 1, ?)';
+          $safe_description = mysqli_real_escape_string($connection, $_POST['description']);
+          $safe_title = mysqli_real_escape_string($connection, $_POST['title']);
+            $new_lot = [$safe_title, $_POST['first_price'], $_POST['category_id'], $safe_description, $_POST['bet_step'], $_POST['date_delection'], $file_path_db];
+            $lot['url'] = $file_path;
 
-      $stmt = db_get_prepare_stmt($connection, $sql, $new_lot);
-      $res = mysqli_stmt_execute($stmt);
+            $sql = 'INSERT INTO lots (name, first_price, category_id, description, bet_step, date_delection, date_creation, author, url) VALUES (?, ?, ?, ?, ?, ?, NOW(), 1, ?)';
+            $stmt = db_get_prepare_stmt($connection, $sql, $new_lot);
+            $res = mysqli_stmt_execute($stmt);
 
       if ($res) {
         $lot_id = mysqli_insert_id($connection);
