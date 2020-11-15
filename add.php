@@ -2,6 +2,10 @@
       require_once("function.php");
       require_once("init.php");
       require_once("helpers.php");
+   $link = mysqli_connect("localhost", "root", "", "yeticave");
+   if ($link === false) {
+     exit;
+   }
   $is_auth = rand(0, 1);
   $errors = [];
   $cats_ids = [];
@@ -42,28 +46,25 @@
       }
     },
     'lot-img' => function() {
-        $lotimg = $_FILES['lot-img']['name'];
-        if(validateImage($lotimg) === false){
+        if(validateImage() === false){
         return "Загрузите картинку в формате jpg, jpeg или png";// функция наличия файла('lot-img');
       }
     }
 ];
 
-if ($_SERVER['REQUEST_METHOD'] == 'POST') {
+if ($_SERVER['REQUEST_METHOD'] === 'POST') {
   foreach ($lot as $key => $value) {
        if (isset($rules[$key])) {
-           $rule = $rules[$key];
-           $result = $rules[$key];
-           $not_yet_errors = [];
-           $not_yet_errors[$key] = $rule($value);
-           if ($not_yet_errors[$key] !== null) {
-             $errors[$key] = $rule($value);
+         $rule = $rules[$key];
+           $result = $rule($value);
+           if ($result !== null) {
+             $errors[$key] = $result;
            }
        }
    }
 }
 foreach ($files as $key => $value) {
-     if (isset($rules[$key]) && $rules[$key] !== null) {
+     if (isset($rules[$key])) {
          $rule = $rules[$key];
          $result = $rule($value);
          if($result !== null){
@@ -71,17 +72,19 @@ foreach ($files as $key => $value) {
        }
      }
 }
+
 if (empty($errors)){
-  if ($_SERVER['REQUEST_METHOD'] == 'POST') {
-      $lot = $_POST;
+  if ($_SERVER['REQUEST_METHOD'] === 'POST') {
           $file_name = $_FILES['lot-img']['name'];
           $uniq_url = uniqid();
           $file_path = __DIR__ . '/uploads/' . $uniq_url . $file_name;
           $file_path_db = 'uploads/' . $uniq_url . $file_name;
           move_uploaded_file($_FILES['lot-img']['tmp_name'], $file_path);
-          $safe_description = mysqli_real_escape_string($connection, $_POST['description']);
-          $safe_title = mysqli_real_escape_string($connection, $_POST['title']);
-            $new_lot = [$safe_title, $_POST['first_price'], $_POST['category_id'], $safe_description, $_POST['bet_step'], $_POST['date_delection'], $file_path_db];
+          if ((move_uploaded_file($_FILES['lot-img']['tmp_name'], $file_path)) === false){
+             print("Ошибка загрузки фото");
+             $lot['lot-img'] = "Ошибка загрузки фото!";
+          }
+            $new_lot = [$_POST['title'], $_POST['first_price'], $_POST['category_id'], $_POST['description'], $_POST['bet_step'], $_POST['date_delection'], $file_path_db];
             $lot['url'] = $file_path;
 
             $sql = 'INSERT INTO lots (name, first_price, category_id, description, bet_step, date_delection, date_creation, author, url) VALUES (?, ?, ?, ?, ?, ?, NOW(), 1, ?)';
