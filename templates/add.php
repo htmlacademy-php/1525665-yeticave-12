@@ -8,7 +8,8 @@
     <?php endforeach; ?>
     </ul>
   </nav>
-  <form class="form form--add-lot container" action="add.php" method="post" enctype="multipart/form-data"> <!-- form--invalid -->
+  <?php $classname = !empty($errors) ? "form--invalid" : ""; ?>
+  <form class="form form--add-lot container <?= $classname; ?>" action="add.php" method="post" enctype="multipart/form-data"> <!-- form--invalid -->
     <h2>Добавление лота</h2>
     <div class="form__container-two">
         <?php $classname = isset($errors['title']) ? "form__item--invalid" : ""; ?>
@@ -38,7 +39,7 @@
     <?php $classname = isset($errors['description']) ? "form__item--invalid" : ""; ?>
     <div class="form__item form__item--wide <?= $classname ?>">
       <label for="description">Описание <sup>*</sup></label>
-      <textarea id="description" name="description" placeholder="Напишите описание лота" value="<?= htmlspecialchars(getPostVal('description')); ?>"></textarea>
+      <textarea id="description" name="description" placeholder="Напишите описание лота"> <?= htmlspecialchars(getPostVal('description')); ?></textarea>
       <?php if(isset($errors['description'])){
        print('<span class="form__error">' . $errors['description'] . '</span>');
     }
