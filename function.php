@@ -1,5 +1,4 @@
 <?php
-
   function format_sum (int $sum){
   $ok_sum = ceil($sum);
     if ($ok_sum >= 1000){
@@ -75,7 +74,7 @@ function validatePrice(){
   if (empty($_POST['first_price'])){
       return false;
   }
-  elseif (ctype_digit(($_POST['first_price'])) === FALSE && $_POST['first_price'] != '0') {
+  elseif (ctype_digit(($_POST['first_price'])) === false && $_POST['first_price'] !== '0') {
     return false;
   }
   }
@@ -84,7 +83,7 @@ function validateBet(){
   if (empty($_POST['bet_step'])){
       return false;
   }
-  elseif (ctype_digit(($_POST['bet_step'])) === FALSE && $_POST['bet_step'] != '0'){
+  elseif (ctype_digit(($_POST['bet_step'])) === false && $_POST['bet_step'] !== '0'){
     return false;
   }
   }
