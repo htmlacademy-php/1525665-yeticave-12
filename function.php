@@ -70,20 +70,20 @@ function validateCategory($id, $allowed_list) {
       }
 }
 
-function validatePrice(){
-  if (empty($_POST['first_price'])){
+function validatePrice($name){
+  if (empty($_POST[$name])){
       return false;
   }
-  elseif (ctype_digit(($_POST['first_price'])) === false && $_POST['first_price'] !== '0') {
+  elseif (ctype_digit(($_POST[$name])) === false && $_POST[$name] !== '0') {
     return false;
   }
   }
 
-function validateBet(){
-  if (empty($_POST['bet_step'])){
+function validateBet($name){
+  if (empty($_POST[$name])){
       return false;
   }
-  elseif (ctype_digit(($_POST['bet_step'])) === false && $_POST['bet_step'] !== '0'){
+  elseif (ctype_digit(($_POST[$name])) === false && $_POST[$name] !== '0'){
     return false;
   }
   }
