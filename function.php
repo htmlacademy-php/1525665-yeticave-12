@@ -70,21 +70,27 @@ function validateCategory($id, $allowed_list) {
       }
 }
 
-function validatePrice($name){
-  if (empty($_POST[$name])){
+function validatePrice(string $price){
+  if (empty($price)){
       return false;
   }
-  elseif (ctype_digit(($_POST[$name])) === false && $_POST[$name] !== '0') {
+  elseif (ctype_digit($price) === false && $price !== '0') {
     return false;
+  }
+  else{
+    return true;
   }
   }
 
-function validateBet($name){
-  if (empty($_POST[$name])){
+function validateBet($price){
+  if (empty($price)){
       return false;
   }
-  elseif (ctype_digit(($_POST[$name])) === false && $_POST[$name] !== '0'){
+  elseif (ctype_digit($price) === false && $price !== '0'){
     return false;
+  }
+  else{
+    return true;
   }
   }
 

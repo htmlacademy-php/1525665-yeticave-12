@@ -18,7 +18,7 @@
       }
     },
     'first_price' => function() {
-         if(validatePrice('first_price') === false){
+         if(validatePrice($_POST['first_price']) === false){
            return "Это поле должно быть заполнено целым положительным числом";
       }
     },
@@ -28,9 +28,9 @@
       }
     },
     'bet_step' => function() {
-        if(validateBet('bet_step') === false){
+        if(validateBet($_POST['bet_step']) === false){
         return "Это поле должно быть заполнено целым положительным числом";
-       } //
+       }
     },
     'date_delection' => function() {
       $date = $_POST['date_delection'];
@@ -78,7 +78,7 @@
           $file_upload_result = move_uploaded_file($_FILES['lot-img']['tmp_name'], $file_path);
           if ($file_upload_result === false){
              $lot['lot-img'] = "Ошибка загрузки фото!";
-             exit;
+             die('Произошла ошибка!');
           }
             $new_lot = [$_POST['title'], $_POST['first_price'], $_POST['category_id'], $_POST['description'], $_POST['bet_step'], $_POST['date_delection'], $file_path_db];
             $lot['url'] = $file_path;
@@ -94,6 +94,7 @@
       }
       else{
         print("Ошибка добавления лота!" . mysqli_error($connection));
+        exit;
       }
     }
     }
