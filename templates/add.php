@@ -39,7 +39,7 @@
     <?php $classname = isset($errors['description']) ? "form__item--invalid" : ""; ?>
     <div class="form__item form__item--wide <?= $classname ?>">
       <label for="description">Описание <sup>*</sup></label>
-      <textarea id="description" name="description" placeholder="Напишите описание лота"> <?= htmlspecialchars(getPostVal('description')); ?></textarea>
+      <textarea id="description" name="description" placeholder="Напишите описание лота"><?= htmlspecialchars(getPostVal('description')); ?></textarea>
       <?php if(isset($errors['description'])){
        print('<span class="form__error">' . $errors['description'] . '</span>');
     }
