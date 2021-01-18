@@ -57,15 +57,14 @@ function validateCategory($id, $allowed_list) {
      $finfo = finfo_open(FILEINFO_MIME_TYPE);
      $tmp_name = $_FILES['lot-img']['tmp_name'];
      $file_type = finfo_file($finfo, $tmp_name);
-             if($file_type !== "image/jpeg" && $file_type !== "image/png"){
+             if($file_type !== "image/jpeg" && $file_type !== "image/png" && $file_type !== "image/jpg"){
                   return  false;
                 }
-
+                if(empty($_FILES['lot-img']['name'])){
+                  return false;
+                }
             }
-            elseif(empty($_FILES['lot-img']['name'])){
-              return false;
-            }
-      else{
+       else{
         return true;
       }
 }
@@ -74,7 +73,7 @@ function validatePrice(string $price){
   if (empty($price)){
       return false;
   }
-  elseif (ctype_digit($price) === false && $price !== '0') {
+  if (ctype_digit($price) === false && $price !== '0') {
     return false;
   }
   else{
@@ -82,11 +81,11 @@ function validatePrice(string $price){
   }
   }
 
-function validateBet($price){
-  if (empty($price)){
+function validateBet($bet){
+  if (empty($bet)){
       return false;
   }
-  elseif (ctype_digit($price) === false && $price !== '0'){
+  if (ctype_digit($bet) === false && $bet !== '0'){
     return false;
   }
   else{

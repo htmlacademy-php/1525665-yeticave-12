@@ -13,22 +13,22 @@
         return validateCategory($value, $cats_ids);
     },
     'title' => function() {
-        if (validateFilled('title') === false){
+        if (!validateFilled('title')){
         return "Это поле должно быть заполнено";
       }
     },
     'first_price' => function() {
-         if(validatePrice($_POST['first_price']) === false){
+         if(!validatePrice($_POST['first_price'])){
            return "Это поле должно быть заполнено целым положительным числом";
       }
     },
     'description' => function() {
-        if (validateFilled('description') === false){
+        if (!validateFilled('description')){
         return "Это поле должно быть заполнено";
       }
     },
     'bet_step' => function() {
-        if(validateBet($_POST['bet_step']) === false){
+        if(!validateBet($_POST['bet_step'])){
         return "Это поле должно быть заполнено целым положительным числом";
        }
     },
@@ -42,8 +42,8 @@
       }
     },
     'lot-img' => function() {
-        if(validateImage() === false){
-        return "Загрузите картинку в формате jpg, jpeg или png";// функция наличия файла('lot-img');
+        if(!validateImage()){
+        return "Загрузите картинку в формате jpg, jpeg или png";
       }
     }
     ];
@@ -80,9 +80,8 @@
              $lot['lot-img'] = "Ошибка загрузки фото!";
              die('Произошла ошибка!');
           }
-            $new_lot = [$_POST['title'], $_POST['first_price'], $_POST['category_id'], $_POST['description'], $_POST['bet_step'], $_POST['date_delection'], $file_path_db];
+             $new_lot = [$_POST['title'], $_POST['first_price'], $_POST['category_id'], $_POST['description'], $_POST['bet_step'], $_POST['date_delection'], $file_path_db];
             $lot['url'] = $file_path;
-
             $sql = 'INSERT INTO lots (name, first_price, category_id, description, bet_step, date_delection, date_creation, author, url) VALUES (?, ?, ?, ?, ?, ?, NOW(), 1, ?)';
             $stmt = db_get_prepare_stmt($connection, $sql, $new_lot);
             $res = mysqli_stmt_execute($stmt);
