@@ -81,7 +81,6 @@
              die('Произошла ошибка!');
           }
              $new_lot = [$_POST['title'], $_POST['first_price'], $_POST['category_id'], $_POST['description'], $_POST['bet_step'], $_POST['date_delection'], $file_path_db];
-            $lot['url'] = $file_path;
             $sql = 'INSERT INTO lots (name, first_price, category_id, description, bet_step, date_delection, date_creation, author, url) VALUES (?, ?, ?, ?, ?, ?, NOW(), 1, ?)';
             $stmt = db_get_prepare_stmt($connection, $sql, $new_lot);
             $res = mysqli_stmt_execute($stmt);
