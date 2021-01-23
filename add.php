@@ -69,32 +69,30 @@
      }
     }
 
-    if (empty($errors)){
-    if ($_SERVER['REQUEST_METHOD'] === 'POST') {
-          $file_name = $_FILES['lot-img']['name'];
-          $uniq_url = uniqid();
-          $file_path = __DIR__ . '/uploads/' . $uniq_url . $file_name;
-          $file_path_db = 'uploads/' . $uniq_url . $file_name;
-          $file_upload_result = move_uploaded_file($_FILES['lot-img']['tmp_name'], $file_path);
-          if ($file_upload_result === false){
-             $lot['lot-img'] = "Ошибка загрузки фото!";
-             die('Произошла ошибка!');
+   if (empty($errors)){
+     if ($_SERVER['REQUEST_METHOD'] === 'POST') {
+        $file_name = $_FILES['lot-img']['name'];
+        $uniq_url = uniqid();
+        $file_path = __DIR__ . '/uploads/' . $uniq_url . $file_name;
+        $file_path_db = 'uploads/' . $uniq_url . $file_name;
+        $file_upload_result = move_uploaded_file($_FILES['lot-img']['tmp_name'], $file_path);
+        if (!$file_upload_result){
+           die('Произошла ошибка!');
+        }
+        $new_lot = [$_POST['title'], $_POST['first_price'], $_POST['category_id'], $_POST['description'], $_POST['bet_step'], $_POST['date_delection'], $file_path_db];
+        $lot['url'] = $file_path;
+        $sql = 'INSERT INTO lots (name, first_price, category_id, description, bet_step, date_delection, date_creation, author, url) VALUES (?, ?, ?, ?, ?, ?, NOW(), 1, ?)';
+        $stmt = db_get_prepare_stmt($connection, $sql, $new_lot);
+        $res = mysqli_stmt_execute($stmt);
+        if ($res) {
+            $lot_id = mysqli_insert_id($connection);
+            header("Location: lot.php?id=" . $lot_id);
           }
-             $new_lot = [$_POST['title'], $_POST['first_price'], $_POST['category_id'], $_POST['description'], $_POST['bet_step'], $_POST['date_delection'], $file_path_db];
-            $sql = 'INSERT INTO lots (name, first_price, category_id, description, bet_step, date_delection, date_creation, author, url) VALUES (?, ?, ?, ?, ?, ?, NOW(), 1, ?)';
-            $stmt = db_get_prepare_stmt($connection, $sql, $new_lot);
-            $res = mysqli_stmt_execute($stmt);
-
-      if ($res) {
-        $lot_id = mysqli_insert_id($connection);
-
-        header("Location: lot.php?id=" . $lot_id);
+        else{
+            print("Ошибка добавления лота!" . mysqli_error($connection));
+            exit;
+        }
       }
-      else{
-        print("Ошибка добавления лота!" . mysqli_error($connection));
-        exit;
-      }
-    }
     }
     $errors = array_filter($errors);
     $content = include_template('add.php', ['categories' => $categories, 'connection' => $connection, 'rules' => $rules, 'errors' => $errors]);
