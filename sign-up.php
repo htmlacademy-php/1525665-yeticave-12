@@ -40,7 +40,6 @@
      }
   }
   if ($_SERVER['REQUEST_METHOD'] === 'POST' && empty($errors)) {
-         $user = $_POST;
          $safe_email = mysqli_real_escape_string($connection, $user['email']);
          $sql = "SELECT id FROM users WHERE email = '$safe_email'";
          $res = mysqli_query($connection, $sql);
@@ -62,7 +61,7 @@
               }
           }
     }
-
+  $errors = array_filter($errors);
   $content = include_template('sign-up.php', ['categories' => $categories, 'connection' => $connection, 'rules' => $rules, 'errors' => $errors]);
   $layout_content = include_template('layout.php', ['content' => $content, 'title' => 'Регистрация', 'categories' => $categories, 'is_auth' => $is_auth, 'user_name' => 'Илья', 'rules' => $rules]);
   print($layout_content);
