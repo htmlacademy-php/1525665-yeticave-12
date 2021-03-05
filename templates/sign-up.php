@@ -8,7 +8,9 @@
             <?php endforeach; ?>
         </ul>
     </nav>
-    <form class="form container form--invalid" action="sign-up.php" method="post" autocomplete="off"> <!-- form
+    <form class="form container <?php if(isset($errors['email'])){
+        print("form--invalid" );
+    } ?>" action="sign-up.php" method="post" autocomplete="off"> <!-- form
     --invalid -->
         <h2>Регистрация нового аккаунта</h2>
         <div class="form__item <?php if(isset($errors['email'])){
