@@ -36,7 +36,10 @@
 
   function validateEmail(string $name) {
     if (!filter_input(INPUT_POST, $name, FILTER_VALIDATE_EMAIL)) {
-        return "Введите корректный email";
+        return false;
+    }
+    else{
+      return true;
     }
   }
 
