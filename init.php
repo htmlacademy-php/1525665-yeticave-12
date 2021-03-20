@@ -1,4 +1,5 @@
 <?php
+  session_start();
   $connection = mysqli_connect("localhost", "root", "", "yeticave");
   if ($connection === false) {
     exit;
