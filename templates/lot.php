@@ -9,6 +9,7 @@
       <p class="lot-item__description"><?= htmlspecialchars($lot['description']); ?></p>
     </div>
     <div class="lot-item__right">
+      <?php if(isset($_SESSION['user_id'])): ?>
       <div class="lot-item__state">
         <div class="lot-item__timer timer <?php
           if ($result_time[0] < 1){
@@ -27,6 +28,7 @@
             Мин. ставка <span><?= htmlspecialchars($lot['bet_step']);  ?></span>
           </div>
         </div>
+         <?php endif; ?>
         <form class="lot-item__form" action="https://echo.htmlacademy.ru" method="post" autocomplete="off">
           <p class="lot-item__form-item form__item form__item--invalid">
             <label for="cost">Ваша ставка</label>

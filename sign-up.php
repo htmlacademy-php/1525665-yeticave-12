@@ -2,8 +2,12 @@
       require_once("init.php");
       require_once("function.php");
       require_once("helpers.php");
-      $is_auth = rand(0, 1);
+      if(!isset($_SESSION['user_id'])){
+           header('Location: login.php');
+           exit;
+      }
       $errors = [];
+      $is_auth = 0;
       $user = $_POST;
       $rules = [
         'email' => function(){
