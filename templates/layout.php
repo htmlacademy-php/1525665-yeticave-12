@@ -22,7 +22,6 @@
         <a class="main-header__add-lot button" href="add.php">Добавить лот</a>
         <nav class="user-menu">
         <?php if (isset($_SESSION['user_id'])): ?>
-        <?php $is_auth = 1; ?>
         <div class="user-menu__logged">
           <p><?= $_SESSION['user_name'] ?></p>
           <a class="user-menu__bets" href="pages/my-bets.html">Мои ставки</a>
