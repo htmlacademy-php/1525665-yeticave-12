@@ -2,12 +2,11 @@
       require_once("init.php");
       require_once("function.php");
       require_once("helpers.php");
-      if(!isset($_SESSION['user_id'])){
+      if(isset($_SESSION['user_id'])){
            header('Location: login.php');
            exit;
       }
       $errors = [];
-      $is_auth = 0;
       $user = $_POST;
       $rules = [
         'email' => function(){
@@ -74,6 +73,6 @@
         }
   $errors = array_filter($errors);
   $content = include_template('sign-up.php', ['categories' => $categories, 'connection' => $connection, 'rules' => $rules, 'errors' => $errors]);
-  $layout_content = include_template('layout.php', ['content' => $content, 'title' => 'Регистрация', 'categories' => $categories, 'is_auth' => $is_auth, 'user_name' => 'Илья', 'rules' => $rules]);
+  $layout_content = include_template('layout.php', ['content' => $content, 'title' => 'Регистрация', 'categories' => $categories, 'is_auth' => $is_auth, 'username' => $username, 'rules' => $rules]);
   print($layout_content);
 ?>
