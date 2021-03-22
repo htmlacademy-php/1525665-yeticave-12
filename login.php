@@ -2,7 +2,10 @@
     require_once("init.php");
     require_once("function.php");
     require_once("helpers.php");
-    $is_auth = rand(0, 1);
+    if (isset($_SESSION['user_id'])) {
+        header("Location: /index.php");
+        exit();
+    }
     $errors = [];
     $user = $_POST;
     $rules = [
@@ -34,7 +37,7 @@
         $sql_info = "SELECT id, name, password FROM users WHERE email = '$safe_email'";
         $res = mysqli_query($connection, $sql_info);
         if (!$res) {
-            exit;
+            die("Произошла ошибка!");
         }
         $user_info = mysqli_fetch_all($res, MYSQLI_ASSOC);
         $user_password = $user_info[0];
@@ -42,7 +45,6 @@
             $errors['email'] = 'Пользователь с таким email не зарегистрирован';
         } else {
             if (password_verify($_POST['password'], $user_password['password'])) {
-                session_start();
                 $_SESSION['user_id'] = $user_password['id'];
                 $_SESSION['user_name'] = $user_password['name'];
                 header("Location: index.php");
@@ -51,14 +53,8 @@
             }
         }
     }
-    else {
-        if (isset($_SESSION['user_id'])) {
-            header("Location: /index.php");
-            exit();
-        }
-    }
     $errors = array_filter($errors);
     $content = include_template('login.php', ['categories' => $categories, 'connection' => $connection, 'rules' => $rules, 'errors' => $errors]);
-    $layout_content = include_template('layout.php', ['content' => $content, 'title' => 'Регистрация', 'categories' => $categories, 'is_auth' => $is_auth, 'user_name' => 'Илья', 'rules' => $rules]);
+    $layout_content = include_template('layout.php', ['content' => $content, 'title' => 'Регистрация', 'categories' => $categories, 'is_auth' => $is_auth, 'user_name' => $username, 'rules' => $rules]);
     print($layout_content);
     ?>
