@@ -10,12 +10,9 @@
       require_once("function.php");
       require_once("helpers.php");
 
-    $user_name = 'Илья';
-    $is_auth = 0;
-
     $content = include_template('main.php', ['categories' => $categories, 'products' => $products]);
 
-    $layout_content = include_template('layout.php', ['content' => $content, 'title' => 'Главная', 'categories' => $categories, 'is_auth' => $is_auth, 'user_name' => 'Илья']);
+    $layout_content = include_template('layout.php', ['content' => $content, 'title' => 'Главная', 'categories' => $categories, 'is_auth' => $is_auth, 'username' => $username]);
 
     print($layout_content);
 ?>
