@@ -6,7 +6,6 @@
         header('Location: login.php');
         exit;
     }
-    $is_auth = rand(0, 1);
     $errors = [];
     $cats_ids = [];
     $cats_ids = array_column($categories, 'id');
@@ -100,6 +99,6 @@
     }
     $errors = array_filter($errors);
     $content = include_template('add.php', ['categories' => $categories, 'connection' => $connection, 'rules' => $rules, 'errors' => $errors]);
-    $layout_content = include_template('layout.php', ['content' => $content, 'title' => 'Добавление лота', 'categories' => $categories, 'is_auth' => $is_auth, 'user_name' => 'Илья', 'rules' => $rules]);
+    $layout_content = include_template('layout.php', ['content' => $content, 'title' => 'Добавление лота', 'categories' => $categories, 'is_auth' => $is_auth, 'username' => $username, 'rules' => $rules]);
     print($layout_content);
 ?>
