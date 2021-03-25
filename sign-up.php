@@ -2,7 +2,10 @@
       require_once("init.php");
       require_once("function.php");
       require_once("helpers.php");
-      $is_auth = rand(0, 1);
+      if(isset($_SESSION['user_id'])){
+           header('Location: login.php');
+           exit;
+      }
       $errors = [];
       $user = $_POST;
       $rules = [
@@ -70,6 +73,6 @@
         }
   $errors = array_filter($errors);
   $content = include_template('sign-up.php', ['categories' => $categories, 'connection' => $connection, 'rules' => $rules, 'errors' => $errors]);
-  $layout_content = include_template('layout.php', ['content' => $content, 'title' => 'Регистрация', 'categories' => $categories, 'is_auth' => $is_auth, 'user_name' => 'Илья', 'rules' => $rules]);
+  $layout_content = include_template('layout.php', ['content' => $content, 'title' => 'Регистрация', 'categories' => $categories, 'is_auth' => $is_auth, 'username' => $username, 'rules' => $rules]);
   print($layout_content);
 ?>

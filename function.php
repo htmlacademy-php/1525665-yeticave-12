@@ -1,5 +1,4 @@
 <?php
-
   function format_sum (int $sum){
     $ok_sum = ceil($sum);
     if ($ok_sum >= 1000){
@@ -52,7 +51,7 @@
      }
   }
 
-  function validateCategory(integer $id, array $allowed_list) {
+  function validateCategory(int $id, array $allowed_list) {
     if (!in_array($id, $allowed_list)) {
         return "Указана несуществующая категория";
     }
