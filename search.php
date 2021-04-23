@@ -5,8 +5,8 @@
     $lots = [];
 	$search = $_GET['search'] ?? '';
 	if ($search) {
-		$sql = "SELECT name, id, first_price, url, date_delection, bet_step FROM lots "
-		  . "WHERE MATCH(lots.name, description) AGAINST(?)";
+		$sql = "SELECT  categories.name AS category_name, lots.name, lots.id AS id, first_price, url, date_delection, bet_step FROM lots JOIN categories ON categories.id = lots.category_id WHERE date_delection > NOW() ORDER BY date_delection DESC "
+		  . "WHERE MATCH(lots.name, description) AGAINST(?);";
 
 		$stmt = db_get_prepare_stmt($connection, $sql, [$search]);
 		mysqli_stmt_execute($stmt);
