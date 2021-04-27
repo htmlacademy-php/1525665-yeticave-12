@@ -26,7 +26,7 @@
       if(!$max_bet){
         $max_bet = $lot['bet_step'];
       }
-      $content = include_template('lot.php', ['lot' => $lot, 'categories' => $categories, 'result_time' => $result_time, 'max_bet' => $max_bet]);
+      $content = include_template('lot.php', ['lot' => $lot, 'categories' => $categories, 'result_time' => $result_time, 'is_auth' => $is_auth, 'max_bet' => $max_bet]);
       $layout_content = include_template('layout.php', ['content' => $content, 'title' => $lot['name'], 'categories' => $categories, 'is_auth' => $is_auth, 'username' => $username]);
       print($layout_content);
 ?>

@@ -43,6 +43,7 @@ REFERENCES users
 (id);
 
 CREATE FULLTEXT INDEX lot_text on lots(description);
+CREATE FULLTEXT INDEX lot_title on lots(name);
 CREATE INDEX lots_name on lots(name);
 
 CREATE TABLE categories (
