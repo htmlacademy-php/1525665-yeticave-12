@@ -22,7 +22,7 @@
               <div class="lot-item__rate">
                 <span class="lot-item__amount">Текущая цена</span>
                 <span class="lot-item__cost">
-                <p><?=$max_bet; ?></p>
+                <p><?= $current_cost; ?></p>
                </span>
               </div>
               <div class="lot-item__min-cost">
@@ -34,7 +34,7 @@
               <p class="lot-item__form-item form__item form__item--invalid">
                 <label for="cost">Ваша ставка</label>
                 <input id="cost" type="text" name="cost" placeholder="12 000">
-                <span class="form__error">Введите наименование лота</span>
+                <span class="form__error">Введите ставку</span>
               </p>
               <button type="submit" class="button">Сделать ставку</button>
             </form>
