@@ -45,22 +45,25 @@
             </form>
           </div>
             <div class="history">
-                <table class="history__list">
-                    <tr class="history__item">
-                        <h3>История ставок (<span>10</span>)</h3>
+                        <?php
+                        $k = 0;
+                        foreach ($bets_history as $b) {
+                            $k = $k + 1;
+                        }
+                        ?>
+                        <h3>История ставок (<span><?= $k; ?></span>)</h3>
                         <table class="history__list">
-                            <?php foreach ($bets_history as $bet):
-                                var_dump($bets_history);?>
+                            <?php
+                                foreach ($bets_history as $bet):
+                                $remaining_minutes = remaining_minutes($bet['time']);
+                                ?>
                             <tr class="history__item">
                                 <td class="history__name"><?= $bet['name']; ?></td>
-                                <td class="history__price"><?= $bet['cost']; ?></td>
-                                <td class="history__time"><?= $bet['timestamp']; ?></td>
+                                <td class="history__price"><?= $bet['cost']; ?> р</td>
+                                <td class="history__time"><?= $remaining_minutes; ?></td>
                             </tr>
                             <?php endforeach; ?>
                         </table>
-                    </tr>
-
-                </table>
             </div>
         </div>
       </div>

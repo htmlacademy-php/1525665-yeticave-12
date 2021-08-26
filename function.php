@@ -98,4 +98,34 @@
       }
     }
 
+    function remaining_minutes(string $timestamp){
+        $date = date_create($timestamp);
+        $today = date_create(date("Y-m-d H:i"));
+        $diff = date_diff($today, $date);
+        $days_count = date_interval_format($diff, '%d');
+        if ($days_count < 1) {
+            $hours_count = date_interval_format($diff, '%h');
+            if ($hours_count < 1) {
+                $minutes_count = date_interval_format($diff, '%i');
+                $rest = get_noun_plural_form(
+                    intval($minutes_count),
+                  'минута',
+                  'минуты',
+                  'минут'
+                );
+                return $minutes_count . ' ' . $rest . ' назад';
+            }
+            $rest = get_noun_plural_form(
+                intval($hours_count),
+                'час',
+                'часа',
+                'часов'
+            );
+            return $hours_count . ' ' . $rest . ' назад';
+        }
+        $timestamp = strtotime($timestamp);
+        $date = date("Y-m-d", $timestamp);
+        $time = date("h:m", $timestamp);
+        return $date . ' в ' . $time;
+    }
 ?>

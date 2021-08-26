@@ -30,9 +30,9 @@
     }
     $current_cost = $max_bet + $lot['price'];
     //Сценарий запроса истории ставок
-    $sql_bets = "SELECT bets.cost as cost, lot_id, user_id as author, users.name, time_bet as timestamp FROM bets JOIN lots ON lots.id = bets.lot_id JOIN users ON user_id = users.id WHERE lots.id = $id;";
+    $sql_bets = "SELECT bets.cost as cost, lot_id, user_id as author, bets.time_bet as time, users.name FROM bets JOIN lots ON lots.id = bets.lot_id JOIN users ON user_id = users.id WHERE lots.id = $id ORDER BY bets.time_bet DESC;";
     $result_bets = mysqli_query($connection, $sql_bets);
-    $bets_history = mysqli_fetch_assoc($result_bets);
+    $bets_history = mysqli_fetch_all($result_bets, MYSQLI_ASSOC);
     //Сценарий добавления ставки
     $errors = [];
     $bet = $_POST;
