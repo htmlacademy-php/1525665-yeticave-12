@@ -86,11 +86,11 @@
       }
     }
 
-  function validateBet(string $bet){
+  function validateBet(string $bet, string $step){
       if (empty($bet)){
           return false;
       }
-      if (ctype_digit($bet) === false && $bet !== '0'){
+      if (ctype_digit($bet) === false && intval($bet) <= 0 or $bet < $step){
         return false;
       }
       else{
