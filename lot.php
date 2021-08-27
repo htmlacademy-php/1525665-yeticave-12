@@ -40,21 +40,13 @@
     $rules = [
         'cost' => function() {
             global $min_bet;
-            if (!validateBet($_POST['cost'], $min_bet)){
+            if (!validateAddBet($_POST['cost'], $min_bet)){
                 return "Это поле должно быть заполнено";
             }
         }
     ];
     if ($_SERVER['REQUEST_METHOD'] === 'POST') {
-        foreach ($_POST as $key => $value) {
-            if (isset($rules[$key])) {
-                $rule = $rules[$key];
-                $result = $rule($value);
-                if ($result !== null) {
-                    $errors[$key] = $result;
-                }
-            }
-        }
+        $errors = return_validated_errors($rules, $errors);
     }
     if (empty($errors)){
         if ($_SERVER['REQUEST_METHOD'] === 'POST') {

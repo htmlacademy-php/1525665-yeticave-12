@@ -52,7 +52,8 @@
     ];
 
     if ($_SERVER['REQUEST_METHOD'] === 'POST') {
-        foreach ($lot as $key => $value) {
+        $errors = return_validated_errors($rules, $errors);
+        foreach ($files as $key => $value) {
             if (isset($rules[$key])) {
                 $rule = $rules[$key];
                 $result = $rule($value);
@@ -62,16 +63,6 @@
             }
         }
     }
-    foreach ($files as $key => $value) {
-        if (isset($rules[$key])) {
-            $rule = $rules[$key];
-            $result = $rule($value);
-            if($result !== null){
-                $errors[$key] = $result;
-            }
-        }
-    }
-
     if (empty($errors)){
         if ($_SERVER['REQUEST_METHOD'] === 'POST') {
             $file_name = $_FILES['lot-img']['name'];

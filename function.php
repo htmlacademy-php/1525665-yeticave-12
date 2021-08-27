@@ -8,7 +8,7 @@
     return $ok_sum;
   }
 
-  function deletion_of_lot($date){
+  function deletion_of_lot(string $date){
     $date = date_create($date);
     $today = date_create(date("Y-m-d H:i"));
     $diff = date_diff($today, $date);
@@ -23,6 +23,39 @@
     }
     $rest_time = [$hours_count, $minutes_count];
     return $rest_time;
+  }
+
+  function deletion_of_lot_with_seconds(string $date){
+      $date = date_create($date);
+      $today = date_create(date("Y-m-d H:i"));
+      $diff = date_diff($today, $date);
+      $days_count = date_interval_format($diff, '%d');
+      $hours_count = date_interval_format($diff, '%h');
+      if($days_count > 0){
+          $hours_count = $hours_count + (24 * $days_count);
+      }
+      $minutes_count = date_interval_format($diff, '%i');
+      $seconds_count = date_interval_format($diff, '%s');
+      if($minutes_count < 10){
+          $minutes_count = 0 . $minutes_count;
+      }
+      if($seconds_count < 10){
+          $seconds_count = 0 . $seconds_count;
+      }
+      $rest_time = [$hours_count, $minutes_count, $seconds_count];
+      return $rest_time;
+  }
+
+  function when_deletion_of_lot($date){
+      $date = date_create($date);
+      $today = date_create(date("Y-m-d H:i:s"));
+      $diff = date_diff($today, $date);
+      $days_count = date_interval_format($diff, '%d');
+      $hours_count = date_interval_format($diff, '%h');
+      if($hours_count < 24 && $days_count > 0){
+         return true;
+      }
+      return false;
   }
 
   function getPostVal(string $name) {
@@ -86,11 +119,23 @@
       }
     }
 
-  function validateBet(string $bet, string $step){
+    function validateBet(string $bet){
+        if (empty($bet)){
+            return false;
+        }
+        if (ctype_digit($bet) === false or intval($bet) <= 0){
+            return false;
+        }
+        else{
+            return true;
+        }
+    }
+
+  function validateAddBet(string $bet, string $step){
       if (empty($bet)){
           return false;
       }
-      if (ctype_digit($bet) === false && intval($bet) <= 0 or $bet < $step){
+      if (ctype_digit($bet) === false or intval($bet) <= 0 or intval($bet) < intval($step)){
         return false;
       }
       else{
@@ -127,5 +172,19 @@
         $date = date("Y-m-d", $timestamp);
         $time = date("h:m", $timestamp);
         return $date . ' в ' . $time;
+    }
+
+    function return_validated_errors(array $rules, array $errors)
+    {
+        foreach ($_POST as $key => $value) {
+            if (isset($rules[$key])) {
+                $rule = $rules[$key];
+                $result = $rule($value);
+                if ($result !== null) {
+                    $errors[$key] = $result;
+                }
+            }
+        }
+        return $errors;
     }
 ?>
