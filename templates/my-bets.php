@@ -26,7 +26,7 @@
           <td class="rates__timer">
             <div class="timer <?php
             $result_time = deletion_of_lot_with_seconds($bet['date_delection']);
-            if (!when_deletion_of_lot($bet['date_delection'])){
+            if (is_lot_expire_soon($bet['date_delection']){
                 echo ' timer--finishing';
             }
             ?>"><?= $rest_time = implode(":", $result_time); ?></div>

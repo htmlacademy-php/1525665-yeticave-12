@@ -46,16 +46,16 @@
       return $rest_time;
   }
 
-  function when_deletion_of_lot($date){
+  function is_lot_expire_soon($date){
       $date = date_create($date);
       $today = date_create(date("Y-m-d H:i:s"));
       $diff = date_diff($today, $date);
       $days_count = date_interval_format($diff, '%d');
       $hours_count = date_interval_format($diff, '%h');
       if($hours_count < 24 && $days_count > 0){
-         return true;
+         return false;
       }
-      return false;
+      return true;
   }
 
   function getPostVal(string $name) {
