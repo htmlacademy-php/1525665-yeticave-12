@@ -19,7 +19,7 @@
     }
     $minutes_count = date_interval_format($diff, '%i');
     if($minutes_count < 10){
-      $minutes_count = 0 . $minutes_count;
+      $minutes_count = "0" . $minutes_count;
     }
     $rest_time = [$hours_count, $minutes_count];
     return $rest_time;
@@ -37,10 +37,10 @@
       $minutes_count = date_interval_format($diff, '%i');
       $seconds_count = date_interval_format($diff, '%s');
       if($minutes_count < 10){
-          $minutes_count = 0 . $minutes_count;
+          $minutes_count = "0" . $minutes_count;
       }
       if($seconds_count < 10){
-          $seconds_count = 0 . $seconds_count;
+          $seconds_count = "0" . $seconds_count;
       }
       $rest_time = [$hours_count, $minutes_count, $seconds_count];
       return $rest_time;
