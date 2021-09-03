@@ -133,10 +133,10 @@
 
   function validateAddBet(string $bet, string $step){
       if (empty($bet)){
-          return false;
+          return "Это поле должно быть заполнено";
       }
       if (ctype_digit($bet) === false or intval($bet) <= 0 or intval($bet) < intval($step)){
-        return false;
+        return "Ставка должна быть быть больше минимальной ставки";
       }
       else{
         return true;

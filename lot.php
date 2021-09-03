@@ -41,7 +41,7 @@
         'cost' => function() {
             global $min_bet;
             if (!validateAddBet($_POST['cost'], $min_bet)){
-                return "Это поле должно быть заполнено";
+                return validateAddBet($_POST['cost'], $min_bet);
             }
         }
     ];
