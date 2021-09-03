@@ -46,10 +46,7 @@
           </div>
             <div class="history">
                         <?php
-                        $k = 0;
-                        foreach ($bets_history as $b) {
-                            $k = $k + 1;
-                        }
+                            $k = count($bets_history);
                         ?>
                         <h3>История ставок (<span><?= $k; ?></span>)</h3>
                         <table class="history__list">
