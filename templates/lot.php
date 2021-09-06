@@ -26,7 +26,7 @@
                </span>
               </div>
               <div class="lot-item__min-cost">
-                Мин. ставка <span><?= htmlspecialchars($lot['min_bet']);  ?></span>
+                Мин. ставка <span><?= htmlspecialchars($current_cost);  ?></span>
               </div>
             </div>
              <?php endif; ?>
@@ -37,7 +37,7 @@
                 <input id="cost" type="text" name="cost" placeholder="12 000">
                 <?php
                     if(isset($errors["cost"])) {
-                        print('<span class="form__error">Ставка должна быть целым положительным числом</span>');
+                        print('<span class="form__error">' . $errors["cost"] . '</span>');
                     }
                     ?>
               </p>

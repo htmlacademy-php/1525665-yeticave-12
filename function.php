@@ -111,7 +111,7 @@
       if (empty($price)){
           return false;
       }
-      if (ctype_digit($price) === false) intval($price) < 0 or $price) {
+      if (ctype_digit($price) === false) {
           return false;
       }
       if (intval($price) < 0 or $price > 9999999999){
