@@ -15,10 +15,10 @@
         <tr class="rates__item">
           <td class="rates__info">
             <div class="rates__img">
-              <img src="../<?= $bet['url'] ?>" width="54" height="40" alt="<?= $bet['name'] ?>">
+              <img src="../<?= $bet['lot_image'] ?>" width="54" height="40" alt="<?= $bet['lot_name'] ?>">
             </div>
             <?php $lot_url = 'lot.php?' . http_build_query(['id' => $bet['id'] ]); ?>
-            <h3 class="rates__title"><a href="<?= $lot_url ?>"><?= $bet['name']; ?></a></h3>
+            <h3 class="rates__title"><a href="<?= $lot_url ?>"><?= $bet['lot_name']; ?></a></h3>
           </td>
           <td class="rates__category">
               <?= $bet['category']; ?>
@@ -26,7 +26,7 @@
           <td class="rates__timer">
             <div class="timer <?php
             $result_time = deletion_of_lot_with_seconds($bet['date_delection']);
-            if (is_lot_expire_soon($bet['date_delection']){
+            if (is_lot_expire_soon($bet['date_delection'])) {
                 echo ' timer--finishing';
             }
             ?>"><?= $rest_time = implode(":", $result_time); ?></div>

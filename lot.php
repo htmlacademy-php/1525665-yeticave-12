@@ -1,7 +1,7 @@
 <?php
     require_once("init.php");
     $id = intval($_GET['id']) ?? NULL;
-    if ($id === NULL) {
+    if ($id === NULL or ctype_digit($_GET['id']) === false) {
       header("Location: pages/404.html");
       exit;
     }
