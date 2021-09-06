@@ -111,7 +111,10 @@
       if (empty($price)){
           return false;
       }
-      if (ctype_digit($price) === false && $price !== '0') {
+      if (ctype_digit($price) === false) intval($price) < 0 or $price) {
+          return false;
+      }
+      if (intval($price) < 0 or $price > 9999999999){
           return false;
       }
       else{
@@ -135,8 +138,14 @@
       if (empty($bet)){
           return "Это поле должно быть заполнено";
       }
-      if (ctype_digit($bet) === false or intval($bet) <= 0 or intval($bet) < intval($step)){
-        return "Ставка должна быть быть больше минимальной ставки";
+      if (ctype_digit($bet) === false){
+        return "Ставка должна быть числом";
+      }
+      if (intval($bet) < intval($step)){
+          return "Ставка должна быть больше минимальной ставки";
+      }
+      if (intval($bet) > 99999999999){
+          return "Ставка не должна превышать 99999999999";
       }
       else{
         return true;
