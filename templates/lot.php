@@ -13,9 +13,11 @@
           <?php if($is_auth === 1): ?>
           <div class="lot-item__state">
             <div class="lot-item__timer timer <?php
-              if ($result_time[0] < 1){
-                echo ' timer--finishing';
-              }; ?>">
+                $result_time = deletion_of_lot($lot['date_delection']);
+                if (is_lot_expire_soon($lot['date_delection'])) {
+                    echo ' timer--finishing';
+                }
+                ?>">
               <?=  $rest_time = implode(":", $result_time); ?>
             </div>
             <div class="lot-item__cost-state">

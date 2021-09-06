@@ -29,7 +29,6 @@
         $max_bet = 0;
     }
     $current_cost = $max_bet + $lot['price'];
-    var_dump($current_cost);
     //Сценарий запроса истории ставок
     $sql_bets = "SELECT bets.cost as cost, lot_id, user_id as author, bets.time_bet as time, users.name FROM bets JOIN lots ON lots.id = bets.lot_id JOIN users ON user_id = users.id WHERE lots.id = $id ORDER BY bets.time_bet DESC;";
     $result_bets = mysqli_query($connection, $sql_bets);
@@ -39,7 +38,6 @@
     $bet = $_POST;
     $rules = [
         'cost' => function($current_cost) {
-            var_dump($current_cost);
             if (validateAddBet($_POST['cost'], $current_cost) !== true){
                 return validateAddBet($_POST['cost'], $current_cost);
             }
