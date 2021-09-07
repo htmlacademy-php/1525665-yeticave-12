@@ -7,6 +7,7 @@
         exit;
     }
     $id = $_SESSION['user_id'];
+
     $sql_bets = "SELECT bets.cost as cost, bets.time_bet as time, lots.author as id, categories.name as category, lots.name as lot_name, lots.id AS id, url as lot_image, date_delection FROM lots JOIN categories ON categories.id = lots.category_id JOIN bets ON bets.lot_id = lots.id WHERE date_delection > NOW() AND bets.user_id = $id ORDER BY bets.time_bet DESC;";
     $result_bets = mysqli_query($connection, $sql_bets);
     if (!$result_bets) {
