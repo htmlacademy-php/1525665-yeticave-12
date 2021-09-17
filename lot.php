@@ -41,7 +41,6 @@
         if ($res !== true)
         {
             $errors['cost'] = $res;
-            var_dump($errors['cost']);
         }
     }
     if (empty($errors)){

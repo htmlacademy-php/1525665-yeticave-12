@@ -15,43 +15,53 @@
       $days_count = date_interval_format($diff, '%d');
       $hours_count = date_interval_format($diff, '%h');
       $minutes_count = date_interval_format($diff, '%m');
-      $time = [$days_count, $hours_count, $minutes_count];
+      $seconds_count = date_interval_format($diff, '%s');
+      $time = [
+          "days" => $days_count,
+          "hours" => $hours_count,
+          "minutes" => $minutes_count,
+          "seconds" => $seconds_count
+      ];
       return $time;
   }
 
   function deletion_of_lot(string $date){
-    $date = date_create($date);
-    $today = date_create(date("Y-m-d H:i"));
-    $diff = date_diff($today, $date);
-    $days_count = date_interval_format($diff, '%d');
-    $hours_count = date_interval_format($diff, '%h');
-    if($days_count > 0){
-      $hours_count = $hours_count + (24 * $days_count);
+    $remaining_time = remaining_time($date);
+    if($remaining_time["days"] > 0){
+      $hours_count = $remaining_time["hours"] + (24 * $remaining_time["days"]);
     }
-    $minutes_count = date_interval_format($diff, '%i');
-    if($minutes_count < 10){
-      $minutes_count = "0" . $minutes_count;
+    else {
+        $hours_count = $remaining_time["hours"];
+    }
+    if($remaining_time["minutes"] < 10){
+      $minutes_count = "0" . $remaining_time["minutes"];
+    }
+    else{
+      $minutes_count = $remaining_time["minutes"];
     }
     $rest_time = [$hours_count, $minutes_count];
     return $rest_time;
   }
 
   function deletion_of_lot_with_seconds(string $date){
-      $date = date_create($date);
-      $today = date_create(date("Y-m-d H:i"));
-      $diff = date_diff($today, $date);
-      $days_count = date_interval_format($diff, '%d');
-      $hours_count = date_interval_format($diff, '%h');
-      if($days_count > 0){
-          $hours_count = $hours_count + (24 * $days_count);
+      $remaining_time = remaining_time($date);
+      if($remaining_time["days"] > 0){
+          $hours_count = $remaining_time["hours"] + (24 * $remaining_time["days"]);
       }
-      $minutes_count = date_interval_format($diff, '%i');
-      $seconds_count = date_interval_format($diff, '%s');
-      if($minutes_count < 10){
-          $minutes_count = "0" . $minutes_count;
+      else {
+          $hours_count = $remaining_time["hours"];
       }
-      if($seconds_count < 10){
-          $seconds_count = "0" . $seconds_count;
+      if($remaining_time["minutes"] < 10){
+          $minutes_count = "0" . $remaining_time["minutes"];
+      }
+      else{
+          $minutes_count = $remaining_time["minutes"];
+      }
+      if($remaining_time["seconds"] < 10){
+          $seconds_count = "0" . $remaining_time["seconds"];
+      }
+      else{
+          $seconds_count = $remaining_time["seconds"];
       }
       $rest_time = [$hours_count, $minutes_count, $seconds_count];
       return $rest_time;

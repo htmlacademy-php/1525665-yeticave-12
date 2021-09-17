@@ -19,7 +19,7 @@
         <ul class="lots__list">
             <?php
               foreach ($products as $product):
-              $result_time = deletion_of_lot($product['date_delection']);
+              $result_time = deletion_of_lot_with_seconds($product['date_delection']);
             ?>
             <li class="lots__item lot">
               <div class="image">
