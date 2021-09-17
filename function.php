@@ -8,6 +8,17 @@
     return $ok_sum;
   }
 
+  function remaining_time(string $date){
+      $date = date_create($date);
+      $today = date_create(date("Y-m-d H:i"));
+      $diff = date_diff($today, $date);
+      $days_count = date_interval_format($diff, '%d');
+      $hours_count = date_interval_format($diff, '%h');
+      $minutes_count = date_interval_format($diff, '%m');
+      $time = [$days_count, $hours_count, $minutes_count];
+      return $time;
+  }
+
   function deletion_of_lot(string $date){
     $date = date_create($date);
     $today = date_create(date("Y-m-d H:i"));

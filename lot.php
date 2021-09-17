@@ -38,8 +38,9 @@
     $bet = $_POST;
     $rules = [
         'cost' => function($current_cost) {
-            if (validateAddBet($_POST['cost'], $current_cost) !== true){
-                return validateAddBet($_POST['cost'], $current_cost);
+            $res = validateAddBet($_POST['cost'], $current_cost);
+            if ($res !== true){
+                return $res;
             }
         }
     ];
