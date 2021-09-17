@@ -36,16 +36,13 @@
     //Сценарий добавления ставки
     $errors = [];
     $bet = $_POST;
-    $rules = [
-        'cost' => function($current_cost) {
-            $res = validateAddBet($_POST['cost'], $current_cost);
-            if ($res !== true){
-                return $res;
-            }
-        }
-    ];
     if ($_SERVER['REQUEST_METHOD'] === 'POST') {
-        $errors = return_validated_errors($rules, $errors);
+        $res = validateAddBet($_POST['cost'], $current_cost);
+        if ($res !== true)
+        {
+            $errors['cost'] = $res;
+            var_dump($errors['cost']);
+        }
     }
     if (empty($errors)){
         if ($_SERVER['REQUEST_METHOD'] === 'POST') {
@@ -64,6 +61,7 @@
             }
         }
     }
+    $errors = array_filter($errors);
     $content = include_template('lot.php', ['lot' => $lot, 'categories' => $categories, 'result_time' => $result_time, 'is_auth' => $is_auth, 'current_cost' => $current_cost, 'errors' => $errors, 'bets_history' => $bets_history]);
     $layout_content = include_template('layout.php', ['content' => $content, 'title' => $lot['name'], 'categories' => $categories, 'is_auth' => $is_auth, 'username' => $username]);
     print($layout_content);
