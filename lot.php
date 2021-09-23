@@ -7,7 +7,7 @@
     }
     require_once("function.php");
     require_once("helpers.php");
-    $sql_lot = "SELECT categories.name AS category_name, lots.name, lots.id AS id, description, first_price AS price, url, date_delection, bet_step AS min_bet FROM lots JOIN categories ON categories.id = lots.category_id WHERE lots.id = $id;";
+    $sql_lot = "SELECT categories.name AS category_name, lots.name, lots.id AS id, description, first_price AS price, url, date_delection, bet_step FROM lots JOIN categories ON categories.id = lots.category_id WHERE lots.id = $id;";
     $result_lot = mysqli_query($connection, $sql_lot);
     if (!$result_lot) {
       exit;
@@ -29,6 +29,7 @@
         $max_bet = 0;
     }
     $current_cost = $max_bet + $lot['price'];
+    $minimal_bet = $lot['price'] + $lot['bet_step'];
     //Сценарий запроса истории ставок
     $sql_bets = "SELECT bets.cost as cost, lot_id, user_id as author, bets.time_bet as time, users.name FROM bets JOIN lots ON lots.id = bets.lot_id JOIN users ON user_id = users.id WHERE lots.id = $id ORDER BY bets.time_bet DESC;";
     $result_bets = mysqli_query($connection, $sql_bets);
@@ -37,7 +38,7 @@
     $errors = [];
     $bet = $_POST;
     if ($_SERVER['REQUEST_METHOD'] === 'POST') {
-        $res = validateAddBet($_POST['cost'], $current_cost);
+        $res = validateAddBet($_POST['cost'], $minimal_bet);
         if ($res !== true)
         {
             $errors['cost'] = $res;
@@ -61,7 +62,7 @@
         }
     }
     $errors = array_filter($errors);
-    $content = include_template('lot.php', ['lot' => $lot, 'categories' => $categories, 'result_time' => $result_time, 'is_auth' => $is_auth, 'current_cost' => $current_cost, 'errors' => $errors, 'bets_history' => $bets_history]);
+    $content = include_template('lot.php', ['lot' => $lot, 'categories' => $categories, 'result_time' => $result_time, 'is_auth' => $is_auth, 'minimal_bet' => $minimal_bet, 'current_cost' => $current_cost, 'errors' => $errors, 'bets_history' => $bets_history]);
     $layout_content = include_template('layout.php', ['content' => $content, 'title' => $lot['name'], 'categories' => $categories, 'is_auth' => $is_auth, 'username' => $username]);
     print($layout_content);
 ?>

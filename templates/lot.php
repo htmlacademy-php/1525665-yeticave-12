@@ -28,7 +28,7 @@
                </span>
               </div>
               <div class="lot-item__min-cost">
-                Мин. ставка <span><?= htmlspecialchars($current_cost);  ?></span>
+                Мин. ставка <span><?= htmlspecialchars($minimal_bet);  ?></span>
               </div>
             </div>
              <?php endif; ?>
