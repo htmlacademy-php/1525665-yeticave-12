@@ -32,7 +32,7 @@
             ?>"><?= $rest_time = implode(":", $result_time); ?></div>
           </td>
           <td class="rates__price">
-                <?= $bet['cost']; ?>
+                <?= $bet['cost']; ?> р
           </td>
           <?php $remaining_minutes = remaining_minutes($bet['time']); ?>
           <td class="rates__time">
