@@ -7,7 +7,7 @@
                 foreach($categories as $category):
                ?>
             <li class="promo__item promo__item--<?=$category['img']; ?>">
-                    <a class="promo__link" href="pages/all-lots.html"><?=$category['name']; ?></a>
+                    <a class="promo__link" href="/?category=<?= $category['id']; ?>"><?=$category['name']; ?></a>
               </li>
               <?php endforeach; ?>
         </ul>
@@ -19,7 +19,7 @@
         <ul class="lots__list">
             <?php
               foreach ($products as $product):
-              $result_time = deletion_of_lot($product['date_delection']);
+              $result_time = deletion_of_lot_with_seconds($product['date_delection']);
             ?>
             <li class="lots__item lot">
               <div class="image">
@@ -50,4 +50,16 @@
                <?php endforeach; ?>
         </ul>
     </section>
+    <?php if ($pages_count > 1): ?>
+        <ul class="pagination-list">
+            <?php if ($cur_page !== 1): ?>
+                <li class="pagination-item pagination-item-prev"><a href="/?page=<?= $cur_page - 1;?>">Назад</a></li>
+            <?php endif; ?>
+            <?php foreach ($pages as $page): ?>
+                <li class="pagination-item <?php if ($page === $cur_page): ?>pagination__item-active<?php endif; ?>"><a href="/?page=<?=$page;?>"><?=$page;?></a></li>
+            <?php endforeach; ?>
+            <li class="pagination-item pagination-item-next"><a href="/?page=<?= $cur_page + 1;?>">Вперед</a></li>
+        </ul>
+        </div>
+    <?php endif; ?>
 </main>
