@@ -47,6 +47,7 @@
             'products' => $products
         ];
     }
+    require_once("getwinner.php");
     $content = include_template('main.php', $tpl_data);
 
     $layout_content = include_template('layout.php', ['content' => $content, 'title' => 'Главная', 'categories' => $categories, 'is_auth' => $is_auth, 'username' => $username]);
