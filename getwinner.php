@@ -7,6 +7,14 @@
     $expired_lots = mysqli_fetch_all($result_lots, MYSQLI_ASSOC);
 
     require_once ("vendor/autoload.php");
+    // Create the Transport
+    $transport = (new Swift_SmtpTransport('smtp.mailtrap.io', 465))
+        ->setUsername('c6bd6800aecad7')
+        ->setPassword('4e7a293ef3b253');
+
+
+    $mailer = new Swift_Mailer($transport);
+
     foreach ($expired_lots as $info):
         $sql = "SELECT name, email, id from users WHERE id = " . intval($info['author']);
         $result_winner_info = mysqli_query($connection, $sql);
@@ -20,14 +28,6 @@
         if (!$result_winner) {
             die("Ошибка добавления победителя в БД!");
         }
-
-            // Create the Transport
-            $transport = (new Swift_SmtpTransport('smtp.mailtrap.io', 465))
-                ->setUsername('c6bd6800aecad7')
-                ->setPassword('4e7a293ef3b253');
-
-
-            $mailer = new Swift_Mailer($transport);
 
             $message = (new Swift_Message('Ваша ставка выиграла'))
                 ->setFrom(['delemoses567@gmail.com' => 'Илья П'])
