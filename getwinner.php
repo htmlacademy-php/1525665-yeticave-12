@@ -1,4 +1,5 @@
 <?php
+    require_once ("config.php");
     $sql_expired_lots = "SELECT MAX(cost) AS max_bet, bets.lot_id, lots.name as title, author, lots.id AS id, url, date_delection FROM lots JOIN bets ON lots.id = bets.lot_id WHERE date_delection < NOW() AND lots.winner = NULL GROUP BY lots.id ORDER BY date_delection DESC;";
     $result_lots = mysqli_query($connection, $sql_expired_lots);
     if (!$result_lots) {
@@ -32,7 +33,7 @@
             $message = (new Swift_Message('Ваша ставка выиграла'))
                 ->setFrom(['delemoses567@gmail.com' => 'Илья П'])
                 ->setTo([$winner['email'], $winner['email'] => $winner['name']])
-                ->setBody(include_template('email.php', ['winner' => $winner]));
+                ->setBody(include_template('email.php', ['winner' => $winner, 'href' => $config['href']]));
             // Send the message
         $result = $mailer->send($message);
     endforeach;
