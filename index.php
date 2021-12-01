@@ -52,4 +52,5 @@
     $layout_content = include_template('layout.php', ['content' => $content, 'title' => 'Главная', 'categories' => $categories, 'is_auth' => $is_auth, 'username' => $username]);
 
     print($layout_content);
+    require_once("getwinner.php");
 ?>
