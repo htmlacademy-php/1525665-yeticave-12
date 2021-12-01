@@ -7,7 +7,7 @@
     }
     require_once("function.php");
     require_once("helpers.php");
-    $sql_lot = "SELECT categories.name AS category_name, lots.name, lots.id AS id, description, first_price AS price, url, date_delection, bet_step FROM lots JOIN categories ON categories.id = lots.category_id WHERE lots.id = $id;";
+    $sql_lot = "SELECT categories.name AS category_name, lots.name, lots.id AS id, description, first_price AS price, url, author, winner, date_delection, bet_step FROM lots JOIN categories ON categories.id = lots.category_id WHERE lots.id = $id;";
     $result_lot = mysqli_query($connection, $sql_lot);
     if (!$result_lot) {
       exit;
@@ -17,7 +17,6 @@
       header("Location: pages/404.html");
       exit;
     }
-    // Сценарий для получения текущей цены
     $result_time = deletion_of_lot_with_seconds($lot['date_delection']);
     // Получаю максимальную ставку для того, чтобы сложить ее с первоначальной ценой и получить текущую цену
     $sql_current = "SELECT MAX(cost) AS cost, lot_id FROM bets JOIN lots ON lots.id = bets.lot_id WHERE lots.id = $id;";
@@ -34,6 +33,14 @@
     $sql_bets = "SELECT bets.cost as cost, lot_id, user_id as author, bets.time_bet as time, users.name FROM bets JOIN lots ON lots.id = bets.lot_id JOIN users ON user_id = users.id WHERE lots.id = $id ORDER BY bets.time_bet DESC;";
     $result_bets = mysqli_query($connection, $sql_bets);
     $bets_history = mysqli_fetch_all($result_bets, MYSQLI_ASSOC);
+
+    $last_bet = reset($bets_history);
+    if ((isset($_SESSION['user_id']) && ($lot['author'] === $user_id or $last_bet['author'] === $_SESSION['user_id'])) or $lot['winner'] !== NULL or strtotime($lot['date_delection']) < time()) {
+        $hide = 1;
+    }
+    else {
+        $hide = 0;
+    }
     //Сценарий добавления ставки
     $errors = [];
     $bet = $_POST;
@@ -62,7 +69,7 @@
         }
     }
     $errors = array_filter($errors);
-    $content = include_template('lot.php', ['lot' => $lot, 'categories' => $categories, 'result_time' => $result_time, 'is_auth' => $is_auth, 'minimal_bet' => $minimal_bet, 'current_cost' => $current_cost, 'errors' => $errors, 'bets_history' => $bets_history]);
+    $content = include_template('lot.php', ['lot' => $lot, 'categories' => $categories, 'result_time' => $result_time, 'is_auth' => $is_auth, 'minimal_bet' => $minimal_bet, 'current_cost' => $current_cost, 'errors' => $errors, 'hide' => $hide, 'bets_history' => $bets_history]);
     $layout_content = include_template('layout.php', ['content' => $content, 'title' => $lot['name'], 'categories' => $categories, 'is_auth' => $is_auth, 'username' => $username]);
     print($layout_content);
 ?>

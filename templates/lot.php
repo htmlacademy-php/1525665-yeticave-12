@@ -10,7 +10,6 @@
           <p class="lot-item__description"><?= htmlspecialchars($lot['description']); ?></p>
         </div>
         <div class="lot-item__right">
-          <?php if($is_auth === 1): ?>
           <div class="lot-item__state">
             <div class="lot-item__timer timer <?php
                 $result_time = deletion_of_lot($lot['date_delection']);
@@ -28,10 +27,10 @@
                </span>
               </div>
               <div class="lot-item__min-cost">
-                Мин. ставка <span><?= htmlspecialchars($minimal_bet);  ?></span>
+                Мин. ставка <span><?= htmlspecialchars($minimal_bet); ?></span>
               </div>
             </div>
-             <?php endif; ?>
+            <?php if($is_auth === 1 && $hide !== 1): ?>
             <form class="lot-item__form" action="" method="post" autocomplete="off">
               <?php $classname = isset($errors['cost']) ? "form__item--invalid" : ""; ?>
               <p class="lot-item__form-item form__item <?= $classname; ?>">
@@ -45,6 +44,7 @@
               </p>
               <button type="submit" class="button">Сделать ставку</button>
             </form>
+            <?php endif; ?>
           </div>
             <div class="history">
                         <?php
