@@ -1,4 +1,6 @@
 <?php
+  require_once("config.php");
+
   session_start();
   if(isset($_SESSION['user_id']) && $_SESSION['user_name']){
       $user_id = $_SESSION['user_id'];
@@ -9,7 +11,7 @@
       $is_auth = 0;
       $username = null;
   }
-  $connection = mysqli_connect("localhost", "root", "", "yeticave");
+  $connection = mysqli_connect($config['db_host'], $config['db_username'], $config['db_password'], "yeticave");
   if ($connection === false) {
     exit;
   }
