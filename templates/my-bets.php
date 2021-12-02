@@ -15,13 +15,13 @@
         <tr class="rates__item">
           <td class="rates__info">
             <div class="rates__img">
-              <img src="../<?= $bet['lot_image'] ?>" width="54" height="40" alt="<?= $bet['lot_name'] ?>">
+              <img src="../<?= $bet['lot_image'] ?>" width="54" height="40" alt="<?= htmlspecialchars($bet['lot_name']); ?>">
             </div>
             <?php $lot_url = 'lot.php?' . http_build_query(['id' => $bet['id'] ]); ?>
-            <h3 class="rates__title"><a href="<?= $lot_url ?>"><?= $bet['lot_name']; ?></a></h3>
+            <h3 class="rates__title"><a href="<?= $lot_url ?>"><?= htmlspecialchars($bet['lot_name']); ?></a></h3>
           </td>
           <td class="rates__category">
-              <?= $bet['category']; ?>
+              <?= htmlspecialchars($bet['category']); ?>
           </td>
           <td class="rates__timer">
             <div class="timer <?php

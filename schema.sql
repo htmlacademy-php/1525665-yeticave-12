@@ -33,24 +33,22 @@ REFERENCES users
 (id);
 
 ALTER TABLE lots ADD
-FOREIGN KEY (category_id)
-REFERENCES categories
-(id);
-
-ALTER TABLE lots ADD
 FOREIGN KEY (winner)
 REFERENCES users
 (id);
 
-CREATE FULLTEXT INDEX lot_text on lots(description);
-CREATE FULLTEXT INDEX lot_title on lots(name);
+ALTER TABLE lots ADD FULLTEXT search (description, name);
 CREATE INDEX lots_name on lots(name);
 
 CREATE TABLE categories (
   id INT AUTO_INCREMENT PRIMARY KEY,
   name CHAR(50) not null,
-	img CHAR(30)
+  img CHAR(30)
 );
+
+ALTER TABLE lots ADD
+    FOREIGN KEY (category_id)
+    REFERENCES categories(id);
 
 
 CREATE TABLE bets (
