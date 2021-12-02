@@ -4,11 +4,18 @@
     require_once("helpers.php");
     $lots = [];
 	$search = $_GET['search'] ?? '';
-	$search = mysqli_real_escape_string($connection, $search);
+	if ($search === '') {
+	    header("Location: pages/404.html");
+    }
+	//$search = mysqli_real_escape_string($connection, $search);
 	if ($search) {
         $cur_page = $_GET['page'] ?? 1;
         $page_items = 9;
-        $result = mysqli_query($connection, "SELECT COUNT(*) as cnt, date_delection FROM lots WHERE lots.date_delection > NOW() AND MATCH(lots.name, description) AGAINST(" . $search . ") group by lots.date_delection;");
+        $sql = 'SELECT COUNT(*) as cnt, date_delection FROM lots WHERE lots.date_delection < NOW() AND MATCH(lots.name, description) AGAINST(' . '"' . $search . '"' . ') group by lots.date_delection;';
+        $result = mysqli_query($connection, $sql);
+        if (!$result) {
+            die(mysqli_error($result));
+        }
         $count = mysqli_fetch_all($result, MYSQLI_ASSOC);
         $items_count = count($count);
 
@@ -20,7 +27,7 @@
             header("Location: pages/404.html");
         }
         // запрос на показ девяти лотов
-        $sql = 'SELECT categories.name AS category_name, lots.name, lots.id AS id, first_price, url, date_delection, bet_step FROM lots JOIN categories ON categories.id = lots.category_id WHERE date_delection > NOW() AND MATCH(lots.name, description) AGAINST(' . $search . ') ORDER BY date_delection DESC LIMIT ' . $page_items . ' OFFSET ' . $offset;
+        $sql = 'SELECT categories.name AS category_name, lots.name, lots.id AS id, first_price, url, date_delection, bet_step FROM lots JOIN categories ON categories.id = lots.category_id WHERE date_delection > NOW() AND MATCH(lots.name, description) AGAINST(' . '"' . $search . '"' . ') ORDER BY date_delection DESC LIMIT ' . $page_items . ' OFFSET ' . $offset;
         if ($lots = mysqli_query($connection, $sql)) {
             $tpl_data = [
                 'categories' => $categories,
@@ -34,8 +41,8 @@
         } else {
             $tpl_data = [
                 'pages_count' => 0,
-                'categories' => $categories,
-                'products' => $products
+                'items_count' => 0,
+                'categories' => $categories
             ];
         }
     }

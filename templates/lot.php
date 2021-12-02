@@ -57,7 +57,7 @@
                                 $remaining_minutes = remaining_minutes($bet['time']);
                                 ?>
                             <tr class="history__item">
-                                <td class="history__name"><?= $bet['name']; ?></td>
+                                <td class="history__name"><?= htmlspecialchars($bet['name']); ?></td>
                                 <td class="history__price"><?= $bet['cost']; ?> р</td>
                                 <td class="history__time"><?= $remaining_minutes; ?></td>
                             </tr>
