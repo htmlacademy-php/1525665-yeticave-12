@@ -34,8 +34,13 @@
     $result_bets = mysqli_query($connection, $sql_bets);
     $bets_history = mysqli_fetch_all($result_bets, MYSQLI_ASSOC);
 
-    $last_bet = reset($bets_history);
-    if ((isset($_SESSION['user_id']) && ($lot['author'] === $user_id or $last_bet['author'] === $_SESSION['user_id'])) or $lot['winner'] !== NULL or strtotime($lot['date_delection']) < time()) {
+    if (!empty($bets_history)) {
+        $last_bet = reset($bets_history);
+    }
+    else {
+        $last_bet['author'] = 0;
+    }
+    if (!(isset($_SESSION['user_id'])) or $lot['author'] === $user_id or $last_bet['author'] === intval($_SESSION['user_id']) or $lot['winner'] !== NULL or strtotime($lot['date_delection']) < time()) {
         $hide = 1;
     }
     else {
