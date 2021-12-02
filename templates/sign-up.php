@@ -3,7 +3,7 @@
         <ul class="nav__list container">
             <?php foreach ($categories as $cat): ?>
                 <li class="nav__item">
-                    <a href="all-lots.html"><?= $cat['name']; ?></a>
+                    <a href="/?category=<?= $category['id']; ?>"><?= $cat['name']; ?></a>
                 </li>
             <?php endforeach; ?>
         </ul>
@@ -17,7 +17,7 @@
             print("form__item--invalid" );
         } ?>"> <!-- form__item--invalid -->
             <label for="email">E-mail <sup>*</sup></label>
-            <input id="email" type="text" name="email" placeholder="Введите e-mail" value="<?= getPostVal('email');?>">
+            <input id="email" type="text" name="email" placeholder="Введите e-mail" value="<?= htmlspecialchars(getPostVal('email'));?>">
             <?php if(isset($errors['email'])){
                 print('<span class="form__error">' . $errors['email'] . '</span>');
             }
@@ -27,7 +27,7 @@
             print("form__item--invalid" );
         } ?>">
             <label for="password">Пароль <sup>*</sup></label>
-            <input id="password" type="password" name="password" placeholder="Введите пароль" value="<?= getPostVal('password');?>">
+            <input id="password" type="password" name="password" placeholder="Введите пароль" value="<?= htmlspecialchars(getPostVal('password'));?>">
             <?php if(isset($errors['password'])){
                 print('<span class="form__error">' . $errors['password'] . '</span>');
             }
@@ -37,7 +37,7 @@
             print("form__item--invalid" );
         } ?>">
             <label for="name">Имя <sup>*</sup></label>
-            <input id="name" type="text" name="name" placeholder="Введите имя" value="<?= getPostVal('name');?>">
+            <input id="name" type="text" name="name" placeholder="Введите имя" value="<?= htmlspecialchars(getPostVal('name'));?>">
             <?php if(isset($errors['name'])){
                 print('<span class="form__error">' . $errors['name'] . '</span>');
             }
@@ -47,7 +47,7 @@
             print("form__item--invalid" );
         } ?>">
             <label for="message">Контактные данные <sup>*</sup></label>
-            <textarea id="message" name="message" placeholder="Напишите как с вами связаться"><?= getPostVal('message');?></textarea>
+            <textarea id="message" name="message" placeholder="Напишите как с вами связаться"><?= htmlspecialchars(getPostVal('message'));?></textarea>
             <?php if(isset($errors['message'])){
                 print('<span class="form__error">' . $errors['message'] . '</span>');
             }
