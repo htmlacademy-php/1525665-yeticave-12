@@ -11,7 +11,7 @@
       $is_auth = 0;
       $username = null;
   }
-  $connection = mysqli_connect($config['db_host'], $config['db_username'], $config['db_password'], "yeticave");
+  $connection = mysqli_connect($config['db_host'], $config['db_username'], $config['db_password'], $config['db_title']);
   if ($connection === false) {
     exit;
   }
