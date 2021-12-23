@@ -3,6 +3,7 @@
         'href' => 'https://localhost',
         'db_password' => '',
         'db_username' => 'root',
+        'db_title' => 'YetiCave',
         'db_host' => 'localhost',
         'smtp_server' => 'smtp.mailtrap.io',
         'MailFromUsername' => 'c6bd6800aecad7',

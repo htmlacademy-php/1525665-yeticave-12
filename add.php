@@ -7,13 +7,13 @@
         exit;
     }
     $errors = [];
-    $cats_ids = [];
-    $cats_ids = array_column($categories, 'id');
+    $categories_ids = [];
+    $categories_ids = array_column($categories, 'id');
     $lot = $_POST;
     $files = $_FILES;
     $rules = [
-        'category_id' => function($value) use ($cats_ids) {
-            return validateCategory($value, $cats_ids);
+        'category_id' => function($value) use ($categories_ids) {
+            return validateCategory($value, $categories_ids);
         },
         'title' => function() {
             if (!validateFilled('title')){
@@ -52,7 +52,7 @@
     ];
 
     if ($_SERVER['REQUEST_METHOD'] === 'POST') {
-        $errors = return_validated_errors($rules, $errors);
+        $errors = return_validated_errors($rules, $errors, $_POST);
         foreach ($files as $key => $value) {
             if (isset($rules[$key])) {
                 $rule = $rules[$key];

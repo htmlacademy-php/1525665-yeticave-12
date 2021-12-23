@@ -27,7 +27,7 @@
                </span>
               </div>
               <div class="lot-item__min-cost">
-                Мин. ставка <span><?= htmlspecialchars($minimal_bet); ?></span>
+                Мин. ставка <span><?= htmlspecialchars($minimal_bet); ?> р</span>
               </div>
             </div>
             <?php if($is_auth === 1 && $hide !== 1): ?>

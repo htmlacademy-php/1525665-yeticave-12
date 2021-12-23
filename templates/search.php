@@ -12,7 +12,10 @@
     </nav>
     <div class="container">
         <section class="lots">
-            <?php if($items_count === 0): ?>
+            <?php
+                if($items_count === 0):
+                $search = $_GET['search'];
+                ?>
             <h2>По вашему запросу ничего не найдено</h2>
             <?php else: ?>
             <h2>Результаты поиска по запросу «<span><?= $search ?></span>»</h2>
@@ -52,13 +55,13 @@
         </section>
         <?php if ($pages_count > 1): ?>
             <ul class="pagination-list">
-                <?php if ($cur_page !== 1): ?>
-                    <li class="pagination-item pagination-item-prev"><a href="/?page=<?= $cur_page - 1;?>">Назад</a></li>
+                <?php if ($current_page !== 1): ?>
+                    <li class="pagination-item pagination-item-prev"><a href="/?page=<?= $current_page - 1;?>">Назад</a></li>
                 <?php endif; ?>
                 <?php foreach ($pages as $page): ?>
-                    <li class="pagination-item <?php if ($page === $cur_page): ?>pagination__item-active<?php endif; ?>"><a href="/?page=<?=$page;?>"><?=$page;?></a></li>
+                    <li class="pagination-item <?php if ($page === $current_page): ?>pagination__item-active<?php endif; ?>"><a href="/?page=<?=$page;?>"><?=$page;?></a></li>
                 <?php endforeach; ?>
-                <li class="pagination-item pagination-item-next"><a href="/?page=<?= $cur_page + 1;?>">Вперед</a></li>
+                <li class="pagination-item pagination-item-next"><a href="/?page=<?= $current_page + 1;?>">Вперед</a></li>
             </ul>
         <?php endif; ?>
         </div>
