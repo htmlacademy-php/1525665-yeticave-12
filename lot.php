@@ -25,9 +25,9 @@
     $max_bet = $lot_max_bet['cost'] ?? NULL;
     if ($lot_max_bet['cost'] === NULL)
     {
-        $max_bet = 0;
+        $max_bet = $lot['price'];
     }
-    $current_cost = $max_bet + $lot['price'];
+    $current_cost = $max_bet;
     $minimal_bet = $lot['price'] + $lot['bet_step'];
     //Сценарий запроса истории ставок
     $sql_bets = "SELECT bets.cost as cost, lot_id, user_id as author, bets.time_bet as time, users.name FROM bets JOIN lots ON lots.id = bets.lot_id JOIN users ON user_id = users.id WHERE lots.id = $id ORDER BY bets.time_bet DESC;";
