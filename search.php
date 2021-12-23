@@ -7,17 +7,18 @@
 	if ($search === '') {
 	    header("Location: pages/404.html");
     }
-	//$search = mysqli_real_escape_string($connection, $search);
 	if ($search) {
         $cur_page = $_GET['page'] ?? 1;
         $page_items = 9;
-        $sql = 'SELECT COUNT(*) as cnt, date_delection FROM lots WHERE lots.date_delection < NOW() AND MATCH(lots.name, description) AGAINST(' . '"' . $search . '"' . ') group by lots.date_delection;';
-        $result = mysqli_query($connection, $sql);
+        $sql = 'SELECT COUNT(*) as cnt, date_delection FROM lots WHERE lots.date_delection < NOW() AND MATCH(lots.name, description) AGAINST(?) group by lots.date_delection;';
+        $stmt = db_get_prepare_stmt($connection, $sql, [$search]);
+        mysqli_stmt_execute($stmt);
+        $result = mysqli_stmt_get_result($stmt);
         if (!$result) {
             die(mysqli_error($result));
         }
-        $count = mysqli_fetch_all($result, MYSQLI_ASSOC);
-        $items_count = count($count);
+        $count_lots = mysqli_fetch_all($result, MYSQLI_ASSOC);
+        $items_count = count($count_lots);
 
         $pages_count = ceil($items_count / $page_items);
         $offset = ($cur_page - 1) * $page_items;
@@ -26,16 +27,21 @@
         if ($cur_page > $pages_count + 1 or ctype_digit($cur_page)) {
             header("Location: pages/404.html");
         }
-        // запрос на показ девяти лотов
-        $sql = 'SELECT categories.name AS category_name, lots.name, lots.id AS id, first_price, url, date_delection, bet_step FROM lots JOIN categories ON categories.id = lots.category_id WHERE date_delection > NOW() AND MATCH(lots.name, description) AGAINST(' . '"' . $search . '"' . ') ORDER BY date_delection DESC LIMIT ' . $page_items . ' OFFSET ' . $offset;
-        if ($lots = mysqli_query($connection, $sql)) {
+
+        $sql = 'SELECT categories.name AS category_name, lots.name, lots.id AS id, first_price, url, date_delection, bet_step FROM lots JOIN categories ON categories.id = lots.category_id WHERE date_delection > NOW() AND MATCH(lots.name, description) AGAINST(?) ORDER BY date_delection DESC LIMIT ' . $page_items . ' OFFSET ' . $offset;
+        $stmt = db_get_prepare_stmt($connection, $sql, [$search]);
+        mysqli_stmt_execute($stmt);
+        $result = mysqli_stmt_get_result($stmt);
+
+        $lots = mysqli_fetch_all($result, MYSQLI_ASSOC);
+        if ($lots) {
             $tpl_data = [
                 'categories' => $categories,
                 'search' => $search,
                 'lots' => $lots,
                 'pages' => $pages,
                 'pages_count' => $pages_count,
-                'cur_page' => $cur_page,
+                'current_page' => $cur_page,
                 'items_count' => $items_count
             ];
         } else {
