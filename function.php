@@ -204,9 +204,9 @@
         return $date . ' в ' . $time;
     }
 
-    function return_validated_errors(array $rules, array $errors)
+    function return_validated_errors(array $rules, array $errors, array $data)
     {
-        foreach ($_POST as $key => $value) {
+        foreach ($data as $key => $value) {
             if (isset($rules[$key])) {
                 $rule = $rules[$key];
                 $result = $rule($value);
@@ -217,4 +217,5 @@
         }
         return $errors;
     }
+
 ?>
