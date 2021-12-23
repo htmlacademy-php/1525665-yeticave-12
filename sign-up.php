@@ -32,15 +32,7 @@
     ];
 
       if ($_SERVER['REQUEST_METHOD'] === 'POST') {
-        foreach ($user as $key => $value) {
-             if (isset($rules[$key])) {
-               $rule = $rules[$key];
-               $result = $rule($value);
-               if ($result !== null) {
-                  $errors[$key] = $result;
-                }
-             }
-         }
+          $errors = return_validated_errors($rules, $errors, $_POST);
       }
       if ($_SERVER['REQUEST_METHOD'] === 'POST' && empty($errors)) {
              $safe_email = mysqli_real_escape_string($connection, $user['email']);

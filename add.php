@@ -52,7 +52,7 @@
     ];
 
     if ($_SERVER['REQUEST_METHOD'] === 'POST') {
-        $errors = return_validated_errors($rules, $errors);
+        $errors = return_validated_errors($rules, $errors, $_POST);
         foreach ($files as $key => $value) {
             if (isset($rules[$key])) {
                 $rule = $rules[$key];

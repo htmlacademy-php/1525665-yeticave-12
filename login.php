@@ -22,15 +22,7 @@
     ];
 
     if ($_SERVER['REQUEST_METHOD'] === 'POST') {
-        foreach ($user as $key => $value) {
-            if (isset($rules[$key])) {
-                $rule = $rules[$key];
-                $result = $rule($value);
-                if ($result !== null) {
-                    $errors[$key] = $result;
-                }
-            }
-        }
+        $errors = return_validated_errors($rules, $errors, $_POST);
     }
     if ($_SERVER['REQUEST_METHOD'] === 'POST' && empty($errors)) {
         $safe_email = mysqli_real_escape_string($connection, $_POST['email']);
@@ -40,7 +32,10 @@
             die("Произошла ошибка!");
         }
         $user_info = mysqli_fetch_all($res, MYSQLI_ASSOC);
-        $user_password = $user_info[0];
+        if(!empty($user_info)) {
+            $user_password = $user_info[0];
+        }
+
         if (mysqli_num_rows($res) === 0) {
             $errors['email'] = 'Пользователь с таким email не зарегистрирован';
         } else {
