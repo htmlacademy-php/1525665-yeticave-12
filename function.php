@@ -1,11 +1,11 @@
 <?php
   function format_sum (int $sum){
-    $ok_sum = ceil($sum);
-    if ($ok_sum >= 1000){
-      $ok_sum = number_format($ok_sum, 0, ' ', ' ');
+    $rounding_sum = ceil($sum);
+    if ($rounding_sum >= 1000){
+        $rounding_sum = number_format($rounding_sum, 0, ' ', ' ');
     }
-    $ok_sum = $ok_sum . ' ₽';
-    return $ok_sum;
+    $rounding_sum = $rounding_sum . ' ₽';
+    return $rounding_sum;
   }
 
   function remaining_time(string $date){
