@@ -28,7 +28,7 @@
         $max_bet = $lot['price'];
     }
     $current_cost = $max_bet;
-    $minimal_bet = $lot['price'] + $lot['bet_step'];
+    $minimal_bet = $max_bet + $lot['bet_step'];
     //Сценарий запроса истории ставок
     $sql_bets = "SELECT bets.cost as cost, lot_id, user_id as author, bets.time_bet as time, users.name FROM bets JOIN lots ON lots.id = bets.lot_id JOIN users ON user_id = users.id WHERE lots.id = $id ORDER BY bets.time_bet DESC;";
     $result_bets = mysqli_query($connection, $sql_bets);
@@ -73,6 +73,7 @@
             }
         }
     }
+    var_dump($hide);
     $errors = array_filter($errors);
     $content = include_template('lot.php', ['lot' => $lot, 'categories' => $categories, 'result_time' => $result_time, 'is_auth' => $is_auth, 'minimal_bet' => $minimal_bet, 'current_cost' => $current_cost, 'errors' => $errors, 'hide' => $hide, 'bets_history' => $bets_history]);
     $layout_content = include_template('layout.php', ['content' => $content, 'title' => $lot['name'], 'categories' => $categories, 'is_auth' => $is_auth, 'username' => $username]);
