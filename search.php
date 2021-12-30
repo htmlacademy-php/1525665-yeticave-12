@@ -7,10 +7,17 @@
 	if ($search === '') {
 	    header("Location: pages/404.html");
     }
-	if ($search) {
+    $errors = [];
+    if ($_SERVER['REQUEST_METHOD'] === 'GET') {
+        if (iconv_strlen($search) < 4)
+        {
+            $errors['search'] = 'Введите более 3-х символов для поиска лота';
+        }
+    }
+	if ($search && empty($errors)) {
         $cur_page = $_GET['page'] ?? 1;
         $page_items = 9;
-        $sql = 'SELECT COUNT(*) as cnt, date_delection FROM lots WHERE lots.date_delection < NOW() AND MATCH(lots.name, description) AGAINST(?) group by lots.date_delection;';
+        $sql = 'SELECT COUNT(*) as cnt, date_delection FROM lots WHERE lots.date_delection > NOW() AND MATCH(lots.name, description) AGAINST(?) group by lots.id;';
         $stmt = db_get_prepare_stmt($connection, $sql, [$search]);
         mysqli_stmt_execute($stmt);
         $result = mysqli_stmt_get_result($stmt);
@@ -51,6 +58,15 @@
                 'categories' => $categories
             ];
         }
+    }
+    else {
+        $tpl_data = [
+            'pages_count' => 0,
+            'items_count' => 0,
+            'errors' => $errors,
+            'search' => $search,
+            'categories' => $categories
+        ];
     }
 
     $content = include_template('search.php', $tpl_data);
