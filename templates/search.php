@@ -12,11 +12,10 @@
     </nav>
     <div class="container">
         <section class="lots">
-            <?php
-                if($items_count === 0):
-                $search = $_GET['search'];
-                ?>
-            <h2>По вашему запросу ничего не найдено</h2>
+            <?php if (isset($errors["search"])): ?>
+                <h2><?= $errors["search"]; ?></h2>
+            <?php elseif($items_count === 0): ?>
+                <h2>По вашему запросу ничего не найдено</h2>
             <?php else: ?>
             <h2>Результаты поиска по запросу «<span><?= $search ?></span>»</h2>
             <ul class="lots__list">
@@ -53,6 +52,7 @@
                 <?php endforeach; ?>
             </ul>
         </section>
+        <?php endif; ?>
         <?php if ($pages_count > 1): ?>
             <ul class="pagination-list">
                 <?php if ($current_page !== 1): ?>
@@ -65,5 +65,4 @@
             </ul>
         <?php endif; ?>
         </div>
-        <?php endif; ?>
 </main>
