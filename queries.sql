@@ -24,7 +24,7 @@ INSERT INTO lots (date_creation, name, description, url, first_price, date_delec
  '2022-11-11',
  500,
  2,
- 1,
+ NULL,
  1
 ),
 (
@@ -36,7 +36,7 @@ INSERT INTO lots (date_creation, name, description, url, first_price, date_delec
   '2022-07-25',
   600,
   2,
-  1,
+  NULL,
   1
 ),
 (
@@ -48,7 +48,7 @@ INSERT INTO lots (date_creation, name, description, url, first_price, date_delec
   '2022-07-24',
   700,
   2,
-  1,
+  NULL,
   2
 ),
 ('2021-12-21',
@@ -59,7 +59,7 @@ INSERT INTO lots (date_creation, name, description, url, first_price, date_delec
  '2022-09-21',
  1000000,
  2,
- 1,
+ NULL,
  3
 ),
 ('2021-12-29',
@@ -70,7 +70,7 @@ INSERT INTO lots (date_creation, name, description, url, first_price, date_delec
  '2022-07-29',
  100,
  3,
- 1,
+ NULL,
  4
 ),
 ('2020-07-30',
@@ -81,7 +81,7 @@ INSERT INTO lots (date_creation, name, description, url, first_price, date_delec
   '2022-07-30',
   200,
   2,
-  1,
+  NULL,
   6
 );
    INSERT INTO bets(time_bet, cost, lot_id, user_id)
