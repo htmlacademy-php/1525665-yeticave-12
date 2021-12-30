@@ -37,16 +37,19 @@
 
     if (!empty($bets_history)) {
         $last_bet = reset($bets_history);
+        $last_bet['author'] = intval($last_bet['author']);
     }
     else {
         $last_bet['author'] = 0;
     }
+
     if (!(isset($_SESSION['user_id'])) or $lot['author'] === $user_id or $last_bet['author'] === intval($_SESSION['user_id']) or $lot['winner'] !== NULL or strtotime($lot['date_delection']) < time()) {
         $hide = 1;
     }
     else {
         $hide = 0;
     }
+
     //Сценарий добавления ставки
     $errors = [];
     $bet = $_POST;
