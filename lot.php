@@ -77,7 +77,6 @@
             }
         }
     }
-    var_dump($hide);
     $errors = array_filter($errors);
     $content = include_template('lot.php', ['lot' => $lot, 'categories' => $categories, 'result_time' => $result_time, 'is_auth' => $is_auth, 'minimal_bet' => $minimal_bet, 'current_cost' => $current_cost, 'errors' => $errors, 'hide' => $hide, 'bets_history' => $bets_history]);
     $layout_content = include_template('layout.php', ['content' => $content, 'title' => $lot['name'], 'categories' => $categories, 'is_auth' => $is_auth, 'username' => $username]);
