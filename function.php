@@ -91,18 +91,14 @@
     if (!filter_input(INPUT_POST, $name, FILTER_VALIDATE_EMAIL)) {
         return false;
     }
-    else{
-      return true;
-    }
+    return true;
   }
 
   function validateFilled(string $name) {
     if (empty($_POST[$name])) {
         return false;
      }
-     else{
-        return true;
-     }
+    return true;
   }
 
   function validateCategory(int $id, array $allowed_list) {
@@ -123,9 +119,7 @@
               if(empty($_FILES['lot-img']['name'])){
                   return false;
               }
-         else{
-            return true;
-        }
+       return true;
       }
 
   function validatePrice(string $price){
@@ -138,9 +132,7 @@
       if (intval($price) < 0 or $price > 9999999999){
           return false;
       }
-      else{
-        return true;
-      }
+      return true;
     }
 
     function validateBet(string $bet){
@@ -150,9 +142,7 @@
         if (ctype_digit($bet) === false or intval($bet) <= 0){
             return false;
         }
-        else{
-            return true;
-        }
+        return true;
     }
 
   function validateAddBet(string $bet, string $step){
@@ -168,9 +158,7 @@
       if (intval($bet) > 99999999999){
           return "Ставка не должна превышать 99999999999";
       }
-      else{
-        return true;
-      }
+      return true;
     }
 
     function remaining_minutes(string $timestamp){
