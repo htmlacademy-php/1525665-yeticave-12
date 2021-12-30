@@ -3,20 +3,23 @@
     require_once("function.php");
     require_once("helpers.php");
 
-    $result = mysqli_query($connection, "SELECT COUNT(*) as cnt, date_delection FROM lots WHERE lots.date_delection > NOW() group by lots.date_delection;");
+    $result = mysqli_query($connection, "SELECT COUNT(*) as cnt, id, date_delection FROM lots WHERE lots.date_delection > NOW() group by lots.id;");
     $lots_count = mysqli_fetch_all($result, MYSQLI_ASSOC);
     $items_count = count($lots_count);
-    $current_page = intval($_GET['page']) ?? 1;
-    if (isset($_GET['page']) && is_int($_GET['page']))
-    {
-        header("Location: pages/404.html");
+    if (isset($_GET['page'])){
+         if (is_numeric($_GET['page']) === false){
+             header("Location: pages/404.html");
+         }
+        $current_page = intval($_GET['page']);
+        }
+    else {
+        $current_page = 1;
     }
     $page_items = 9;
-    var_dump($items_count);
     $pages_count = ceil($items_count / $page_items);
     $offset = ($current_page - 1) * $page_items;
-    $pages = range(1, $pages_count + 1);
-    if (($current_page > $pages_count + 1) or $current_page === 0) {
+    $pages = range(1, $pages_count);
+    if (($current_page > $pages_count + 1) or $current_page <= 0) {
         header("Location: pages/404.html");
     }
 
