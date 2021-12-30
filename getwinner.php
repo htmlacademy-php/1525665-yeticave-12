@@ -1,5 +1,5 @@
 <?php
-    $sql_expired_lots = "SELECT MAX(cost) AS max_bet, bets.lot_id, lots.name as title, author, lots.id AS id, url, date_delection FROM lots JOIN bets ON lots.id = bets.lot_id WHERE date_delection < NOW() AND lots.winner = NULL GROUP BY lots.id ORDER BY date_delection DESC;";
+    $sql_expired_lots = "SELECT MAX(cost) AS max_bet, bets.lot_id, lots.name as title, author, lots.id AS id, url, date_delection FROM lots JOIN bets ON lots.id = bets.lot_id WHERE date_delection < NOW() AND lots.winner IS NULL GROUP BY lots.id ORDER BY date_delection DESC;";
     $result_lots = mysqli_query($connection, $sql_expired_lots);
     if (!$result_lots) {
         exit;
