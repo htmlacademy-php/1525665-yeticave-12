@@ -35,7 +35,7 @@
               <?php $classname = isset($errors['cost']) ? "form__item--invalid" : ""; ?>
               <p class="lot-item__form-item form__item <?= $classname; ?>">
                 <label for="cost">Ваша ставка</label>
-                <input id="cost" type="text" name="cost" placeholder="12 000">
+                <input id="cost" type="text" name="cost" placeholder="<?= htmlspecialchars($minimal_bet); ?>">
                 <?php
                     if(isset($errors["cost"])) {
                         print('<span class="form__error">' . $errors["cost"] . '</span>');
