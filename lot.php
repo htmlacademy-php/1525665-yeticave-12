@@ -1,10 +1,11 @@
 <?php
     require_once("init.php");
-    $id = intval($_GET['id']) ?? NULL;
+    $id = $_GET['id'] ?? NULL;
     if ($id === NULL or ctype_digit($_GET['id']) === false) {
       header("Location: pages/404.html");
       exit;
     }
+    $id = intval($_GET['id']);
     require_once("function.php");
     require_once("helpers.php");
     $sql_lot = "SELECT categories.name AS category_name, lots.name, lots.id AS id, description, first_price AS price, url, author, winner, date_delection, bet_step FROM lots JOIN categories ON categories.id = lots.category_id WHERE lots.id = $id;";
