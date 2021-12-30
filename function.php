@@ -73,7 +73,7 @@
       $diff = date_diff($today, $date);
       $days_count = date_interval_format($diff, '%d');
       $hours_count = date_interval_format($diff, '%h');
-      if($hours_count < 24 && $days_count > 0){
+      if($hours_count < 24){
          return false;
       }
       return true;
